@@ -1,0 +1,41 @@
+<div class="container shadow">
+	
+	<table id='sensor_stats' class='sensor_stats' border="0" cellspacing="0" cellpadding="0">
+		
+		<thead>
+		<tr>
+			<th>id</th>
+			<th>Name</th>
+			<th>Packet loss</th>
+			<th>Avg. B/W</th>
+			<th>Alerts</th>
+			<th>Packets</th>
+			<th>Bytes</th>
+			<th>Match</th>
+			<th>New SSNS</th>
+			<th>TTL SSNS</th>
+			<th>MAX SSNS</th>
+			<th>Update Time</th>
+		</tr>
+		</thead>
+
+		<tbody class='content'>
+			<tr style='display:none;'>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+			</tr>
+		</tbody>
+
+	</table>
+	
+	
+	<%= erb(:pane, :layout => false) %>
+	
+</div>
+

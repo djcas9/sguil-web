@@ -1,0 +1,42 @@
+<div class='pane_holder'> 
+	
+	<div class='options'>
+		<ul>			
+		  
+		  <li class='toggle tab'>
+				<a class='' href="#">My Incidents</a>
+			</li>
+		  
+		  <li class='toggle tab'>
+				<a class='' href="#">Notes</a>
+			</li>
+		  
+			<li class='toggle tab'>
+				<a class='show_sensor_updates' href="#sensor_updates">Sensor Updates</a>
+			</li>
+			
+			<li class='toggle tab'>
+				<a class='show_user_message' href="#user_message">User Messages</a>
+			</li>
+			
+			<li class='toggle tab'>
+				<a class='show_system_messages' href="#">System Messages</a>
+			</li>
+			
+			<li class='toggle'>
+				<a class='hide_update_pane' href="#hide">Hide Pane</a>
+			</li>
+			
+		</ul>
+	</div>
+	
+	
+	<div class='pane_data'>
+
+		<%= erb(:sensor_updates, :layout => false) %>
+		<%= erb(:user_message, :layout => false) %>
+		<%= erb(:system_message, :layout => false) %>
+
+	</div>
+	
+</div>

@@ -1,0 +1,333 @@
+html,
+body{
+	background-color: #ededed;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	font: 12px/1.5em Verdana;
+}
+
+#wrapper{
+	margin: 20px;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	background-color: #ededed;
+}
+
+div.container{
+	background-color: #fff;
+	padding: 10px;
+	border: 1px solid #b7b7b7;
+}
+
+
+span.title{
+	font-size: 4.0em;
+	color: #fdfcfe;
+	font-weight: bold;
+	text-decoration: none;
+	font-variant: normal;
+	background-color: #2b2b2c;
+	text-shadow: #000 2px 3px 0;
+	letter-spacing: -6px;
+	padding: 20px 10px 20px 20px;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	border-bottom: 1px solid #fff;
+}
+
+span.title span.subtitle{
+	letter-spacing: -2px;
+	font-size: 0.4em;
+}
+
+/* @group Sensors */
+
+div.container table{
+	width: 100%;
+	position: relative;
+	overflow: visible;
+}
+div.container table th{
+	text-align: left;
+	font-variant: normal;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: small;
+	color: #fffeff;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	background-color: #7a8086;
+	padding-left: 10px;
+	letter-spacing: -1px;
+}
+
+div.container table tr:hover td{
+	background-color: #fdfddc;
+}
+
+div.container table td.name{
+	font-weight: normal;
+	letter-spacing: -1px;
+	color: #000;
+	font-style: normal;
+	text-decoration: none;
+	font-variant: normal;
+}
+
+div.container table td{
+	font-size: small;
+	border-bottom: 1px solid #ededed;
+	padding: 7px 5px 7px 10px;
+	color: #4c4c4c;
+	background-color: #fbfbfb;
+}
+
+div.pane_holder{
+	display: block;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 300px;
+	margin-top: -30px;
+}
+
+div.pane_data{
+	background-color: rgba(0,0,0,0.82);
+	overflow: hidden;
+	border-top: 1px solid #000;
+	width: 100%;
+	height: 100%;
+}
+
+div.pane_data table{
+	width: 100%;
+	position: relative;
+	overflow: visible;
+	color: #fffeff;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-variant: normal;
+	font-size: small;
+}
+
+div.pane_data table th{
+	text-align: left;
+	font-variant: normal;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: small;
+	color: #fffeff;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	background-color: #000;
+	padding-left: 10px;
+	letter-spacing: -1px;
+	border-bottom: 1px solid #1d1d1d;
+}
+
+div.pane_data table td{
+	background-color: #3a3a3a;
+	padding-left: 10px;
+	height: 15px;
+	line-height: 15px;
+	border-bottom: 1px solid #222;
+	border-top: 1px solid #494949;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	font-variant: normal;
+	color: #fffeff;
+}
+
+div.pane_data table td.name{
+	color: #fd2b37;
+}
+
+div.pane_data table tr:hover td{
+	background-color: #353535;
+}
+
+div.options{
+	display: block;
+	position: relative;
+	overflow: hidden;
+	height: 25px;
+	border-bottom: 1px solid #161616;
+	width: 100%;
+	float: left;
+}
+
+div.options ul{
+	list-style: none;
+	height: 25px;
+	line-height: 25px;
+	margin: 0;
+	padding: 0 20px 0 0;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	float: right;
+}
+
+div.options ul li{
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-topleft: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+	height: 25px;
+	line-height: 25px;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	background-color: #000;
+	color: #fffeff;
+	padding-right: 20px;
+	padding-left: 20px;
+	margin-right: 5px;
+	float: left;
+}
+
+div.options ul li a{
+	color: #fffeff;
+	font-weight: normal;
+	text-decoration: none;
+	font-variant: normal;
+	letter-spacing: -1px;
+	font-size: small;
+	font-style: normal;
+	position: relative;
+	display: block;
+	overflow: hidden;
+}
+
+div.options ul li a:hover{
+	color: #959595;
+}
+
+
+/* @end */
+
+/* @group Helpers */
+
+.shadow {
+  -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+  filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=0,OffY=1,Color='gray');
+  -ms-filter: "progid:DXImageTransform.Microsoft.dropshadow(OffX=0,OffY=1,Color='gray')";
+	margin: 10px;
+}
+
+.round {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+}
+
+.round_top {
+        -moz-border-radius-topright: 4px;
+        -moz-border-radius-topleft: 4px;
+        -webkit-border-top-right-radius: 4px;
+        -webkit-border-top-left-radius: 4px;
+}
+
+.round_bottom {
+        -moz-border-radius-bottomright: 4px;
+        -moz-border-radius-bottomleft: 4px;
+        -webkit-border-bottom-right-radius: 4px;
+        -webkit-border-bottom-left-radius: 4px;
+}
+
+/* @end */
+
+/* @group User Messages */
+
+div.user_messages{
+	display: block;
+	overflow: auto;
+	position: relative;
+}
+
+div.user_messages ul.messages{
+	list-style: none;
+	display: block;
+	position: relative;
+	overflow: auto;
+	height: 160px;
+	background-color: #141414;
+	margin: 10px 15px 10px 10px;
+	border: 1px solid #444;
+	padding: 10px;
+}
+
+div.user_messages ul.messages li{
+	color: #fffeff;
+	height: 25px;
+	line-height: 25px;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	padding: 0;
+}
+
+div.user_messages ul.messages li span.name{
+	color: #fd2024;
+}
+
+div.user_messages ul.messages li span.msg{
+	color: #fffeff;
+}
+
+
+div.user_messages input.message_input{
+	width: 80%;
+	padding: 10px;
+	margin-right: 20px;
+	margin-left: 20px;
+	background-color: #0b0b0b;
+	color: #fffeff;
+	border: 1px solid #4a4a4a;
+}
+
+
+/* @end */
+
+/* @group Growl */
+
+.ui-notify { width:350px; position:fixed; top:10px; right:10px;
+	z-index: 999999;
+}
+.ui-notify-message { padding:10px; margin-bottom:15px; -moz-border-radius:8px; -webkit-border-radius:8px; border-radius:8px }
+.ui-notify-message h1 { font-size:14px; margin:0; padding:0 }
+.ui-notify-message p { margin:3px 0; padding:0; line-height:18px }
+.ui-notify-message:last-child { margin-bottom:0 }
+.ui-notify-message-style { background:#000; background:rgba(0,0,0,0.8); -moz-box-shadow: 0 0 6px #000; -webkit-box-shadow: 0 0 6px #000; box-shadow: 0 0 6px #000; }
+.ui-notify-message-style h1 { color:#fff; font-weight:bold }
+.ui-notify-message-style p { color:#fff }
+.ui-notify-close { color:#fff; text-decoration:underline }
+.ui-notify-click { cursor:pointer }
+.ui-notify-cross { margin-top:-4px; float:right; cursor:pointer; text-decoration:none; font-size:12px; font-weight:bold; text-shadow:0 1px 1px #fff; padding:2px }
+.ui-notify-cross:hover { color:#ffffab }
+.ui-notify-cross:active { position:relative; top:1px }
+
+/* @end */
+
+/* @group System Messages */
+
+ul.system_messages{
+	list-style: none;
+	color: #f2f2f2;
+}
+
+ul.system_messages span.time{
+	color: #616161;
+}
+ul.system_messages span.name{
+	color: #fd2024;;
+}
+
+/* @end */
