@@ -62,9 +62,9 @@ module Sguil
 
           case line
           when %r|^NewSnortStats|
-            format_and_publish(:new_snort_stats, data)
+            format_and_publish(:new_snort_stats, line)
           when %r|^SensorList|
-            @sensors = format_and_publish(:sensors, data)
+            @sensors = format_and_publish(:sensors, line)
           # when %r|^UserMessage|
           #   format_and_publish(:user_message, data)
           # when %r|^InsertSystemInfoMsg|
