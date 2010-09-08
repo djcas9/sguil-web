@@ -1,26 +1,24 @@
 require 'eventmachine'
-require 'faye'
-require 'json'
 
-require 'sguild/helpers'
-require 'sguild/callbacks'
-require 'sguild/parser'
-require 'sguild/connect'
-require 'sguild/version'
+require 'sguil/helpers'
+require 'sguil/ui'
+require 'sguil/callbacks'
+require 'sguil/connect'
+require 'sguil/version'
 
-module Sguild
+module Sguil
   class << self
     include Sguil::Helpers::UI
 
     def ui
-      @ui ||= UI.new
+      @ui ||= Sguil::UI.new
     end
     
-    def connect(options={},verbose=false)
-      @server = options[:server] || '0.0.0.0'
-      @port = options[:port] || 1221
+    def connect(options={})
+      @server = options[:server] || 'demo.sguil.net'
+      @port = options[:port] || 7734
       @ssl = options[:ssl] || true
-      @verbose = verbose
+      @verbose = options[:verbose] || true
 
       begin
         Sguil.ui.info "SguilWeb #{Sguil::VERSION} - Connecting To Sguil Server #{@server}:#{@port}."

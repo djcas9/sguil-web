@@ -19,7 +19,7 @@ module Sguil
         parser.send(method.to_sym) if parser.respond_to?(method.to_sym)
       end
       
-      def push
+      def login
         
       end
       
