@@ -77,7 +77,7 @@ var Sguil = {
 		
 		$('#growl').notify("create", {
 		    title: ''+system.object+' :',
-		    text: system.msg
+		    text: system.message
 		},{
 		    expires: 3000,
 		    speed: 500
@@ -92,7 +92,7 @@ var Sguil = {
 		
 			$('#growl').notify("create", {
 			    title: ''+data.username+' Said:',
-			    text: data.msg
+			    text: data.message
 			},{
 			    expires: 3000,
 			    speed: 500
