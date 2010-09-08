@@ -8,11 +8,11 @@ module Sguil
     @before_data_callbacks ||= []
   end
   
-  def Sguil.on_connect
+  def Sguil.before_connect
     @connect_callbacks ||= []
   end
   
-  def Sguil.on_disconnect
+  def Sguil.before_disconnect
     @disconnect_callbacks ||= []
   end
   
