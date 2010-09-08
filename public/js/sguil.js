@@ -19,7 +19,7 @@ function hide_and_update_pane(url,selector) {
 
 var Sguil = {
 	
-	Helpers: = {
+	Helpers: {
 		
 		flashMessages: function() {
 	    $('<div id="flash-messages"></div>').appendTo('body');
