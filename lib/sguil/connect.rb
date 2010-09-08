@@ -78,7 +78,7 @@ module Sguil
         when %r|^UpdateSnortStats|
           push 'sensor/updates', format_and_publish(:update_snort_stats, line)
         when %r|^InsertEvent|
-          push 'events/insert', format_and_publish(:insert_event, line)
+          push 'insert/events', format_and_publish(:insert_event, line)
         end
       end
     end

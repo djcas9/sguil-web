@@ -146,6 +146,7 @@ var Sguil = {
 
 	insert_event: function(data){		
 		$('table.event_stats').trigger("update");
+		
 		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+' style="opacity: 0.1;"> \
 			<td>'+data.event_id+'</td> \
 			<td class="priority_'+data.priority+'">'+data.priority+'</td> \
@@ -233,20 +234,23 @@ var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
 var sensor_array = new Array();
 
 var usermsg = sguil.subscribe('/usermsg', function (usermsg) {
+	console.log(usermsg);
 	Sguil.add_usermsg(usermsg);
 });
 
 var system_message = sguil.subscribe('/system_message', function (system) {
+	console.log(system);
 	Sguil.add_system_message(system);
 });
 
-var events = sguil.subscribe('/events/insert', function(sguil_event) {
-	Sguil.insert_event(sguil_event);
+var events = sguil.subscribe('/add_event', function(data) {
+	console.log(data);
+	Sguil.insert_event(data);
 });
 
 var sensor = sguil.subscribe('/sensor', function (sensor) {
 	// sensor_array.push(sensor);
-	// console.log(sensor_array);
+	console.log(sensor);
 	Sguil.add_sensor(sensor);
 	//$('table.sensor_stats').trigger("update");
 });
