@@ -30,7 +30,7 @@ end
 
 get '/login' do
   unless has_session?
-    @@sguil = Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true})
+    @@sguil = Sguil::Connect.new({:client => "#{env['REMOTE_ADDR']}:8081", :verbose => true})
     @@sguil.login({:username => 'demo', :password => 'demo'})
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
