@@ -1,0 +1,37 @@
+<div class="container shadow">
+	
+	<table id='event_stats' class='event_stats' border="0" cellspacing="0" cellpadding="0">
+		
+		<thead>
+		<tr>
+			<th>Event ID</th>
+			<th>Priority</th>
+			<th>Sensor</th>
+			<th>Signature</th>
+			<th>Source IP</th>
+			<th>Source Port</th>
+			<th>Destination IP</th>
+			<th>Destination Port</th>
+			<th>Created At</th>
+		</tr>
+		</thead>
+
+		<tbody class='content'>
+			<tr style='display:none;'>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+			</tr>
+		</tbody>
+
+	</table>
+	
+	
+	<%= erb(:pane, :layout => false) %>
+	
+</div>

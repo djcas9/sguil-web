@@ -59,7 +59,8 @@ module Sguil
       while line = @socket.gets do
 
         @unknown_command = true
-        puts line if @verbose
+        
+        Sguil.ui.verbose(line) if @verbose
 
         Sguil.callbacks.each do |block|
           (block.call(self,line) && @unknown_command = false) if block
@@ -77,7 +78,7 @@ module Sguil
         when %r|^UpdateSnortStats|
           push '/sensor/updates', format_and_publish(:update_snort_stats, line)
         when %r|^InsertEvent|
-          pp format_and_publish(:insert_event, line)
+          push '/events/insert', format_and_publish(:insert_event, line)
         end
       end
     end

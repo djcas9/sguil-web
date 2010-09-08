@@ -14,14 +14,25 @@ module Sguil
       end
 
       #
+      # Yellow
+      #
+      # @param [String] msg Message to format.
+      #
+      # @return [String] Yellow Colored String
+      #
+      def yellow(msg)
+        "\e[33m#{msg}\e[0m"
+      end
+      
+      #
       # Blue
       #
       # @param [String] msg Message to format.
       #
       # @return [String] Blue Colored String
       #
-      def yellow(msg)
-        "\e[33m#{msg}\e[0m"
+      def blue(msg)
+        "\e[34m#{msg}\e[0m"
       end
 
       #

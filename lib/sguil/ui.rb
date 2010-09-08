@@ -5,6 +5,10 @@ module Sguil
     def info(message)
       show_message :INFO, "#{message}", STDOUT
     end
+    
+    def verbose(message)
+      show_message :VERBOSE, "#{message}", STDOUT
+    end
 
     def warning(message)
       show_message :WARN, "#{message}", STDOUT
@@ -26,6 +30,8 @@ module Sguil
         type = yellow(type)
       when :ERROR
         type = red(type)
+      when :VERBOSE
+        type = blue(type)
       end
       std.puts("#{type}: #{message}") if std.respond_to?(:puts)
     end

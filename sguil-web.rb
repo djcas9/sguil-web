@@ -21,7 +21,7 @@ end
 
 get '/' do
   redirect '/welcome' unless has_session?
-  erb :sensors
+  erb :events
 end
 
 get '/welcome' do
@@ -74,6 +74,11 @@ post '/user/message' do
 end
 
 post '/system/message' do
+  env['faye.client'].publish('/system_message', params)
+  "SYSMSG"
+end
+
+post '/events/insert' do
   env['faye.client'].publish('/system_message', params)
   "SYSMSG"
 end

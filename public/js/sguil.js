@@ -19,6 +19,18 @@ function hide_and_update_pane(url,selector) {
 
 var Sguil = {
 	
+	var Helpers = {
+		
+		flashMessages: function() {
+	    $('<div id="flash-messages"></div>').appendTo('body');
+	  },
+
+	  flashMessage: function(message) {
+	    $('<p class="flash-message" />').text(message).appendTo("#flash-messages");
+	  }
+		
+	}
+	
 	connect: function(){
 		$("#growl").notify({
 		    speed: 500,
@@ -38,7 +50,6 @@ var Sguil = {
 	},
 	
 	table: function(){
-		
 	// 	$('#sensor_stats').livequery(function() {
 	// 		$('table.sensor_stats').trigger("update");
 	// 		$(this).tablesorter({
@@ -133,6 +144,34 @@ var Sguil = {
 		
 	},
 
+	insert_event: function(event){		
+		$('table.event_stats').trigger("update");
+		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+' style="opacity: 0.1;"> \
+			<td>'+data.event_id+'</td> \
+			<td class="priority_'+data.priority+'">'+data.priority+'</td> \
+			<td>'+data.sensor+'</td> \
+			<td class="name">'+data.signature+'</td> \
+			<td class="source_id">'+data.source_ip+'</td> \
+			<td class="source_port">'+data.source_port+'</td> \
+			<td class="destination_ip">'+data.bytes+'</td> \
+			<td class="destination_port">'+data.match+'</td> \
+			<td>'+data.created_at+'</td> \
+			</tr>';
+			
+			if ($('table.event_stats tbody.content tr.'+data.event_id).length > 0) {
+
+				$('table.event_stats tbody.content tr.'+data.event_id).replaceWith(EventData);
+				highlight_new_row(data.event_id);
+
+			} else {
+
+				$('table.event_stats tbody.content').append(EventData);
+				highlight_new_row(data.event_id);
+
+			};
+		
+	},
+
 	add_sensor: function(data){
 		$('table.sensor_stats').trigger("update");
 		
@@ -199,6 +238,10 @@ var usermsg = sguil.subscribe('/usermsg', function (usermsg) {
 
 var system_message = sguil.subscribe('/system_message', function (system) {
 	Sguil.add_system_message(system);
+});
+
+var events = sguil.subscribe('/events/insert', function(sguil_event) {
+	Sguil.insert_event(sguil_event);
 });
 
 var sensor = sguil.subscribe('/sensor', function (sensor) {
