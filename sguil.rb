@@ -5,7 +5,7 @@ require 'faye'
 require 'set'
 require 'pp'
 
-require 'sguild'
+require 'sguil'
 
 enable :sessions
 use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
