@@ -15,7 +15,7 @@ module Sguil
     def post_init
       @buffer = ''
       sguil_connect
-      send_data "ValidateUser demo demo"
+      send_data "ValidateUser demo demo\n"
     end
 
     # def ssl_handshake_completed
