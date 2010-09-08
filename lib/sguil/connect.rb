@@ -71,13 +71,13 @@ module Sguil
         when %r|^SensorList|
           format_and_publish(:sensors, line)
         when %r|^UserMessage|
-          push '/user/message', format_and_publish(:user_message, data)
+          push '/user/message', format_and_publish(:user_message, line)
         when %r|^InsertSystemInfoMsg|
-          push '/system/message', format_and_publish(:insert_system_information, data)
+          push '/system/message', format_and_publish(:insert_system_information, line)
         when %r|^UpdateSnortStats|
-          push '/sensor/updates', format_and_publish(:update_snort_stats, data)
+          push '/sensor/updates', format_and_publish(:update_snort_stats, line)
         when %r|^InsertEvent|
-          format_and_publish(:insert_event, data)
+          pp format_and_publish(:insert_event, line)
         end
       end
     end
