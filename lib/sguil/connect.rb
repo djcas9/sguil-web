@@ -4,6 +4,11 @@ require 'sguil/parse'
 require 'pp'
 
 module Sguil
+
+  def Sguil.sensors
+    @sensors ||= []
+  end
+
   class Connect
     include Sguil::Callbacks
     include Sguil::Helpers::Commands
@@ -35,7 +40,7 @@ module Sguil
     def sensor_list
       send "SendSensorList"
     end
-    
+
     def monitor(sensors)
       if sensors.is_a?(Array)
         @socket.puts "MonitorSensors {#{sensors.join(' ')}}" if sensors
@@ -48,9 +53,9 @@ module Sguil
     end
 
     def receive_data
-      
+
       Sguil.before_receive_data.each { |block| block.call if block }
-      
+
       while line = @socket.gets do
 
           @unknown_command = true
@@ -64,18 +69,15 @@ module Sguil
           when %r|^NewSnortStats|
             format_and_publish(:new_snort_stats, line)
           when %r|^SensorList|
-            @sensors = format_and_publish(:sensors, line)
-            puts format_and_publish(:sensors, line)
-            puts line
-            puts @sensors
-          # when %r|^UserMessage|
-          #   format_and_publish(:user_message, data)
-          # when %r|^InsertSystemInfoMsg|
-          #   format_and_publish(:insert_system_information, data)
-          # when %r|^UpdateSnortStats|
-          #   format_and_publish(:update_snort_stats, data)
-          # when %r|^InsertEvent|
-          #   format_and_publish(:insert_event, data)
+            Sguil.sensors << format_and_publish(:sensors, line)
+            # when %r|^UserMessage|
+            #   format_and_publish(:user_message, data)
+            # when %r|^InsertSystemInfoMsg|
+            #   format_and_publish(:insert_system_information, data)
+            # when %r|^UpdateSnortStats|
+            #   format_and_publish(:update_snort_stats, data)
+            # when %r|^InsertEvent|
+            #   format_and_publish(:insert_event, data)
           end
 
           # format_snort_stats(data) if data =~ /NewSnortStats/

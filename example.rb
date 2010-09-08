@@ -9,8 +9,8 @@ include Sguil::Callbacks
 before_receive_data do 
   @sguil.login('demo', 'demo')
   @sguil.sensor_list
-  puts @sguil.sensors
-  @sguil.monitor(@sguil.sensors)
+  puts Sguil.sensors
+  @sguil.monitor(Sguil.sensors)
 end
 
 @sguil.receive_data
