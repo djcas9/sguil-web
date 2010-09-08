@@ -1,3 +1,4 @@
+require 'socket'
 require 'rest-client'
 require 'uri'
 require 'pp'
@@ -20,7 +21,7 @@ module Sguild
     end
 
     def sensor(sensors=nil)
-      @socket.puts "MonitorSensors #{sensors}" if sensors
+      @socket.puts "MonitorSensors {#{sensors}}" if sensors
     end
     
     def sendmsg(msg)
@@ -32,6 +33,10 @@ module Sguild
       return true if @socket.gets == 'PONG'
       false
     end
+    
+    def sensor_list
+       @socket.puts("SendSensorList")
+    end
 
     def run!
       while data = @socket.gets do
@@ -40,6 +45,17 @@ module Sguild
         format_user_message(data) if data =~ /UserMessage/
         format_system_message(data) if data =~ /InsertSystemInfoMsg/
         push('sensor', format_update_data(data)) if data =~ /UpdateSnortStats/ #/InsertEvent/
+        # 
+        # InsertEvent {0 1 unknown demo {2010-09-07 20:47:24} 1 1 {SHELLCODE sparc NOOP} 61.219.90.180 192.168.100.28 6 56711 6112 1 645 5 1 1 1}
+        # InsertEvent {0 3 unknown demo {2010-09-07 20:58:08} 1 2 {ICMP Destination Unreachable Port Unreachable} 148.244.153.69 192.168.100.28 1 {} {} 1 402 7 2 2 2}
+        # InsertEvent {0 3 unknown demo {2010-09-07 21:04:57} 1 4 {FTP format string attempt} 192.168.100.28 192.18.99.122 6 32791 21 1 2417 2 4 4 2}
+        # InsertEvent {0 2 unknown demo {2010-09-07 21:10:54} 1 6 {DDOS Stacheldraht agent->handler skillz} 192.168.100.28 217.116.38.10 1 {} {} 1 1855 7 8 8 20}
+        # InsertEvent {0 3 unknown demo {2010-09-07 21:10:54} 1 7 {ICMP Echo Reply} 192.168.100.28 217.116.38.10 1 {} {} 1 408 5 9 9 20}
+        # InsertEvent {0 2 unknown demo {2010-09-07 21:30:50} 1 46 {WEB-MISC robots.txt access} 207.46.13.51 10.1.1.4 6 34251 80 1 1852 3 48 48 1}
+        # InsertEvent {0 2 unknown demo {2010-09-07 21:32:59} 1 47 {WEB-MISC robots.txt access} 207.46.199.185 10.1.1.4 6 43963 80 1 1852 3 49 49 1}
+        # InsertEvent {0 2 unknown demo {2010-09-07 21:51:59} 1 48 {WEB-MISC /doc/ access} 207.46.13.51 10.1.1.4 6 47780 80 1 1560 6 50 50 1}
+        # InsertEvent {0 2 unknown demo {2010-09-08 00:34:27} 1 49 {ATTACK-RESPONSES 403 Forbidden} 10.1.1.4 216.118.158.184 6 80 52851 1 1201 7 51 51 1}
+        # 
       end
       @socket.close
     end

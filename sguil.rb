@@ -1,7 +1,6 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'rubygems'
 require 'sinatra'
-require 'socket'
 require 'faye'
 require 'set'
 require 'pp'
@@ -47,7 +46,17 @@ get '/login' do
   end
 end
 
+get '/sensor_list' do
+  @@sguilsocket.sensor_list if has_session?
+  'SENSOR_LIST'
+end
+
 post '/connect' do
+  @@sguilsocket.sensor('DEMO_DMZ') if has_session?
+  "CONNECT" 
+end
+
+get '/connect' do
   @@sguilsocket.sensor('demo') if has_session?
   "CONNECT" 
 end
