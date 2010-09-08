@@ -18,12 +18,14 @@ module Sguil
       @port = options[:port] || 7734
       @verbose = options[:verbose] || true
       @socket = TCPSocket.open(@server, @port)
-      Sguil.ui.info "SguilWeb #{Sguil::VERSION} - Connecting To Sguil Server #{@server}:#{@port}."
+      Sguil.ui.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
       sguil_connect
     end
 
-    def login(username,password)
-      send "ValidateUser demo demo"
+    def login(options={})
+      username = options[:username] || 'demo'
+      password = options[:password] || 'demo'
+      send("ValidateUser #{username} #{password}")
     end
     
     def sensors
@@ -31,16 +33,18 @@ module Sguil
     end
 
     def send_message(message)
-      send "UserMessage {#{message.strip}}"
-      @socket.puts("UserMessage {#{msg.strip}}")
+      send("UserMessage {#{message.strip}}")
     end
 
     def sensor_list
-      send "SendSensorList"
+      send("SendSensorList")
     end
 
     def monitor(sensors)
-      @socket.puts "MonitorSensors {#{sensors.join(' ')}}" if sensors && sensors.kind_of?(Array)
+      if sensors
+        return send("MonitorSensors {#{sensors.join(' ')}}") if sensors.kind_of?(Array)
+        send("MonitorSensors {#{sensors}}")
+      end
     end
 
     def kill!

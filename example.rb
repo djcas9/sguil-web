@@ -7,7 +7,7 @@ include Sguil::Callbacks
 @sguil = Sguil.connect({:client => '0.0.0.0', :verbose => true})
 
 before_receive_data do 
-  @sguil.login('demo', 'demo')
+  @sguil.login(:username => 'demo', :password => 'demo')
   @sguil.sensor_list
   puts @sguil.sensors
   puts Sguil.sensors

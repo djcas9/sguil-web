@@ -22,6 +22,10 @@ module Sguil
       include Sguil::Helpers::UI
     end
     
+    def add_command(&block)
+      Sguil.callbacks << block if block
+    end
+    
     def before_receive_data(&block)
       Sguil.before_receive_data << block if block
     end
