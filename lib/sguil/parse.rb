@@ -19,6 +19,10 @@ module Sguil
       end
     end
     
+    def sensors
+      @sensors = @data.to_s.gsub("SensorList", '').gsub(/\{|\}/, '').split(' ')
+    end
+    
   end
 end
 

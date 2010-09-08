@@ -35,6 +35,12 @@ module Sguil
     def sensor_list
       send "SendSensorList"
     end
+    
+    def monitor(sensors)
+      if sensors.is_a?(Array)
+        @socket.puts "MonitorSensors {#{sensors}}" if sensors
+      end
+    end
 
     def kill!
       @socket.close
@@ -57,6 +63,8 @@ module Sguil
           case line
           when %r|^NewSnortStats|
             format_and_publish(:new_snort_stats, data)
+          when %r|^SensorList|
+            @sensors = format_and_publish(:sensors, data)
           # when %r|^UserMessage|
           #   format_and_publish(:user_message, data)
           # when %r|^InsertSystemInfoMsg|
