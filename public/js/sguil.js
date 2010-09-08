@@ -19,7 +19,7 @@ function hide_and_update_pane(url,selector) {
 
 var Sguil = {
 	
-	var Helpers = {
+	Helpers: = {
 		
 		flashMessages: function() {
 	    $('<div id="flash-messages"></div>').appendTo('body');
@@ -29,7 +29,7 @@ var Sguil = {
 	    $('<p class="flash-message" />').text(message).appendTo("#flash-messages");
 	  }
 		
-	}
+	},
 	
 	connect: function(){
 		$("#growl").notify({

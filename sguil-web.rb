@@ -7,7 +7,7 @@ require 'pp'
 require 'sguil'
 
 enable :sessions
-use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
+# use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
 
 configure do
 end
