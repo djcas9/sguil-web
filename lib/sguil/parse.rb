@@ -1,5 +1,5 @@
 module Sguil
-  module Parse
+  class Parse
     
     def initialize(data)
       @data = data
