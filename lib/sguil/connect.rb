@@ -8,6 +8,10 @@ module Sguil
   def Sguil.sensors
     @sensors ||= []
   end
+  
+  def Sguil.sensors=(sensors)
+    @sensors = sensors
+  end
 
   class Connect
     include Sguil::Callbacks
