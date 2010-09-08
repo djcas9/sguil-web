@@ -79,7 +79,7 @@ post '/system/message' do
 end
 
 post '/events/insert' do
-  env['faye.client'].publish('/system_message', params)
+  env['faye.client'].publish('/events/insert', params)
   "SYSMSG"
 end
 
