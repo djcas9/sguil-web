@@ -16,6 +16,7 @@ module Sguil
       @buffer = ''
       sguil_connect
       send_data "ValidateUser demo demo\n"
+      send_data "SendSensorList\n"
     end
 
     # def ssl_handshake_completed
@@ -28,10 +29,8 @@ module Sguil
     end
 
     def receive_data(data)
-      puts data
       @buffer << data
-      puts @buffer
-      while line = @buffer #.slice!(/(.+)\r?\n/)
+      while line = @buffer.slice!(/(.+)\r?\n/)
 
         @unknown_command = true
         puts line if @verbose
