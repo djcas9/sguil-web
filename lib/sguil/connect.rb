@@ -38,7 +38,7 @@ module Sguil
     
     def monitor(sensors)
       if sensors.is_a?(Array)
-        @socket.puts "MonitorSensors {#{sensors}}" if sensors
+        @socket.puts "MonitorSensors {#{sensors.join(' ')}}" if sensors
       end
     end
 

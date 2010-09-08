@@ -1,4 +1,5 @@
 require 'eventmachine'
+require 'pp'
 
 require 'sguil/helpers'
 require 'sguil/ui'
