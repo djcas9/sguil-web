@@ -31,6 +31,10 @@ module Sguil
     def login(username,password)
       send "ValidateUser demo demo"
     end
+    
+    def sensors
+      Sguil.sensors
+    end
 
     def send_message(message)
       send "UserMessage {#{message.strip}}"
@@ -69,8 +73,7 @@ module Sguil
           when %r|^NewSnortStats|
             format_and_publish(:new_snort_stats, line)
           when %r|^SensorList|
-            Sguil.sensors << format_and_publish(:sensors, line)
-            pp Sguil.sensors
+            Sguil.sensors = format_and_publish(:sensors, line)
             # when %r|^UserMessage|
             #   format_and_publish(:user_message, data)
             # when %r|^InsertSystemInfoMsg|
