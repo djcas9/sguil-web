@@ -2,7 +2,6 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
 require 'rubygems'
 require 'sinatra'
 require 'faye'
-require 'set'
 require 'pp'
 
 require 'sguil'
@@ -14,12 +13,10 @@ configure do
 end
 
 helpers do
-
   def has_session?
-    return true if defined?(@@sguilproc)
+    return true if defined?(@fork)
     false
   end
-
 end
 
 get '/' do
@@ -33,62 +30,74 @@ end
 
 get '/login' do
   unless has_session?
-    @@sguilsocket = Sguild::Connect.new({:client => env['HTTP_HOST']}, true)
-    @@sguilsocket.login({:username => 'demo', :password => 'guest'})
+    @sguil = Sguild::Connect.new({:client => env['HTTP_HOST']}, true)
+    @sguil.login({:username => 'demo', :password => 'demo'})
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
     session[:agent] = env['HTTP_USER_AGENT']
     session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
-    @@sguilproc = Thread.new { @@sguilsocket.run! }
+    @fork = Thread.new { @sguil.receive_data }
     redirect '/' if has_session?
   else
     redirect '/welcome'
   end
 end
 
-get '/sensor_list' do
-  @@sguilsocket.sensor_list if has_session?
-  'SENSOR_LIST'
-end
-
-post '/connect' do
-  @@sguilsocket.sensor('DEMO_DMZ') if has_session?
-  "CONNECT" 
-end
-
-get '/connect' do
-  @@sguilsocket.sensor('demo') if has_session?
-  "CONNECT" 
-end
-
 get '/logout' do
   begin
-    @@sguilsocket.kill! if defined?(@@sguilsocket)
+    @sguil.kill! if defined?(@sguil)
   rescue IOError
   ensure
     redirect '/welcome'
   end
 end
 
-post '/sensor' do
-  env['faye.client'].publish('/sensor', params)
-  "PUSH ADDED"
-end
-
-post '/usermsg' do
-  env['faye.client'].publish('/usermsg', params)
-  "USERMSG"
-end
-
 get '/sensor_updates' do
   erb :sensor_updates
 end
 
-post '/system_message' do
+#
+# Faye Subscriptions
+# 
+# All commands sent from the sguild
+# server to be published to connected
+# client.
+# 
+post '/sensor/updates' do
+  env['faye.client'].publish('/sensor', params)
+  "PUSH ADDED"
+end
+
+post '/user/message' do
+  env['faye.client'].publish('/usermsg', params)
+  "USERMSG"
+end
+
+post '/system/message' do
   env['faye.client'].publish('/system_message', params)
   "SYSMSG"
 end
 
-post '/sendmsg' do
-  @@sguilsocket.sendmsg("#{params[:msg]}")
+# Send Commands
+# 
+# All commands that are sent to
+# the sguild server.
+#
+get '/sensor_list' do
+  @sguil.sensor_list if has_session?
+  'SENSOR_LIST'
+end
+
+post '/connect' do
+  @sguil.monitor('DEMO_DMZ') if has_session?
+  "CONNECT" 
+end
+
+get '/connect' do
+  @sguil.sensor('demo') if has_session?
+  "CONNECT" 
+end
+
+post '/send/message' do
+  @sguil.send_message("#{params[:msg]}")
 end

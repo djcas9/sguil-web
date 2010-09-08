@@ -27,7 +27,7 @@ module Sguil
       password = options[:password] || 'demo'
       send("ValidateUser #{username} #{password}")
     end
-    
+
     def sensors
       Sguil.sensors
     end
@@ -58,33 +58,30 @@ module Sguil
 
       while line = @socket.gets do
 
-          @unknown_command = true
-          puts line if @verbose
+        @unknown_command = true
+        puts line if @verbose
 
-          Sguil.callbacks.each do |block|
-            (block.call(self,line) && @unknown_command = false) if block
-          end
+        Sguil.callbacks.each do |block|
+          (block.call(self,line) && @unknown_command = false) if block
+        end
 
-          case line
-          when %r|^NewSnortStats|
-            format_and_publish(:new_snort_stats, line)
-          when %r|^SensorList|
-            format_and_publish(:sensors, line)
-            # when %r|^UserMessage|
-            #   format_and_publish(:user_message, data)
-            # when %r|^InsertSystemInfoMsg|
-            #   format_and_publish(:insert_system_information, data)
-            # when %r|^UpdateSnortStats|
-            #   format_and_publish(:update_snort_stats, data)
-            # when %r|^InsertEvent|
-            #   format_and_publish(:insert_event, data)
-          end
-
-          # format_snort_stats(data) if data =~ /NewSnortStats/
-          # format_user_message(data) if data =~ /UserMessage/
-          # format_system_message(data) if data =~ /InsertSystemInfoMsg/
-          # push('sensor', format_update_data(data)) if data =~ /UpdateSnortStats/ #/InsertEvent/
+        case line
+        when %r|^NewSnortStats|
+          push 'path_here', format_and_publish(:new_snort_stats, line)
+        when %r|^SensorList|
+          format_and_publish(:sensors, line)
+        when %r|^UserMessage|
+          push '/user/message', format_and_publish(:user_message, data)
+        when %r|^InsertSystemInfoMsg|
+          push '/system/message', format_and_publish(:insert_system_information, data)
+        when %r|^UpdateSnortStats|
+          push '/sensor/updates', format_and_publish(:update_snort_stats, data)
+        when %r|^InsertEvent|
+          format_and_publish(:insert_event, data)
         end
       end
     end
+
+
   end
+end

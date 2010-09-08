@@ -51,7 +51,7 @@ var Sguil = {
 
 		$('form.new_user_message').livequery('submit',function() {
 			var chatInput = $('input.message_input').val();
-			$.post('/sendmsg', {msg:chatInput});
+			$.post('/send/message', {msg:chatInput});
 			$('input.message_input').val('');
 			return false;
     });
