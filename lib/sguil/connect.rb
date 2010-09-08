@@ -70,6 +70,7 @@ module Sguil
             format_and_publish(:new_snort_stats, line)
           when %r|^SensorList|
             Sguil.sensors << format_and_publish(:sensors, line)
+            pp Sguil.sensors
             # when %r|^UserMessage|
             #   format_and_publish(:user_message, data)
             # when %r|^InsertSystemInfoMsg|

@@ -6,7 +6,7 @@ module Sguil
     end
 
     def strip_brackets(data=nil)
-      data = data ? @data : data.nil?
+      parse_data = @data ? data : data
       return data[/\{(\S.+)\}/,1]
     end
 
