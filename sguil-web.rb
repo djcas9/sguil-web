@@ -14,7 +14,7 @@ end
 
 helpers do
   def has_session?
-    return true if defined?(@fork)
+    return true if defined?(@@fork)
     false
   end
 end
@@ -30,13 +30,13 @@ end
 
 get '/login' do
   unless has_session?
-    @sguil = Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true})
-    @sguil.login({:username => 'demo', :password => 'demo'})
+    @@sguil = Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true})
+    @@sguil.login({:username => 'demo', :password => 'demo'})
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
     session[:agent] = env['HTTP_USER_AGENT']
     session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
-    @fork = Thread.new { @sguil.receive_data }
+    @@fork = Thread.new { @@sguil.receive_data }
     redirect '/' if has_session?
   else
     redirect '/welcome'
@@ -45,7 +45,7 @@ end
 
 get '/logout' do
   begin
-    @sguil.kill! if defined?(@sguil)
+    @@sguil.kill! if defined?(@@sguil)
   rescue IOError
   ensure
     redirect '/welcome'
@@ -89,20 +89,20 @@ end
 # the sguild server.
 #
 get '/sensor_list' do
-  @sguil.sensor_list if has_session?
+  @@sguil.sensor_list if has_session?
   'SENSOR_LIST'
 end
 
 post '/connect' do
-  @sguil.monitor('DEMO_DMZ') if has_session?
+  @@sguil.monitor('DEMO_DMZ') if has_session?
   "CONNECT" 
 end
 
 get '/connect' do
-  @sguil.sensor('demo') if has_session?
+  @@sguil.sensor('demo') if has_session?
   "CONNECT" 
 end
 
 post '/send/message' do
-  @sguil.send_message("#{params[:msg]}")
+  @@sguil.send_message("#{params[:msg]}")
 end
