@@ -17,7 +17,7 @@ module Sguil
       user_message = chop_at('UserMessage')
       username = user_message.first
       user_message.collect { |word| message << word unless word == username }
-      return { :username => username, :msg => message.join(' ') }
+      return { :username => username, :message => message.join(' ') }
     end
 
     def insert_system_information

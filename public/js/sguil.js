@@ -73,7 +73,7 @@ var Sguil = {
 	
 	add_system_message: function(system){
 		dateTime = new Date();
-		$('div.pane_holder div.pane_data ul.system_messages').append('<li><span class="time">'+dateTime+'</span> <span class="name">'+system.object+':</span> <span class="msg">'+system.msg+'</span></li>');
+		$('div.pane_holder div.pane_data ul.system_messages').append('<li><span class="time">'+dateTime+'</span> <span class="name">'+system.object+':</span> <span class="msg">'+system.message+'</span></li>');
 		
 		$('#growl').notify("create", {
 		    title: ''+system.object+' :',
@@ -86,7 +86,7 @@ var Sguil = {
 	
 	add_usermsg: function(data){
 		dateTime = new Date();
-		$('div.pane_holder div.pane_data div.user_messages ul.messages').append('<li><span class="time">'+dateTime+'</span> <span class="name">'+data.username+':</span> <span class="msg">'+data.msg+'</span></li>');
+		$('div.pane_holder div.pane_data div.user_messages ul.messages').append('<li><span class="time">'+dateTime+'</span> <span class="name">'+data.username+':</span> <span class="msg">'+data.message+'</span></li>');
 		
 		if (sguil_user != data.username) {
 		
@@ -144,7 +144,7 @@ var Sguil = {
 		
 	},
 
-	insert_event: function(event){		
+	insert_event: function(data){		
 		$('table.event_stats').trigger("update");
 		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+' style="opacity: 0.1;"> \
 			<td>'+data.event_id+'</td> \
