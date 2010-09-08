@@ -36,15 +36,15 @@ module Sguil
       send "SendSensorList"
     end
 
-
     def kill!
       @socket.close
       exit -1
     end
 
     def receive_data
-      Sguil.on_connect.each { |block| block.call if block }
-
+      
+      Sguil.before_receive_data.each { |block| block.call if block }
+      
       while line = @socket.gets do
 
           @unknown_command = true

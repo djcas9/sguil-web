@@ -6,12 +6,12 @@ module Sguil
       include Sguil::Helpers::UI
       
       def sguil_connect
-        Sguil.on_connect.each { |block| block.call if block }
+        Sguil.before_connect.each { |block| block.call if block }
         Sguil.ui.info "Client Connected."
       end
       
       def sguil_disconnect
-        Sguil.on_disconnect.each { |block| block.call if block }
+        Sguil.before_disconnect.each { |block| block.call if block }
         Sguil.ui.warning "Client Disconnected."
         @socket.close
       end

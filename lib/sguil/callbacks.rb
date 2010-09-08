@@ -4,6 +4,10 @@ module Sguil
     @callbacks ||= []
   end
   
+  def Sguil.before_receive_data
+    @before_data_callbacks ||= []
+  end
+  
   def Sguil.on_connect
     @connect_callbacks ||= []
   end
@@ -18,15 +22,15 @@ module Sguil
       include Sguil::Helpers::UI
     end
     
-    def add_callback(&block)
-      Sguil.callbacks << block if block
+    def before_receive_data(&block)
+      Sguil.before_receive_data << block if block
     end
     
-    def on_connect(&block)
+    def before_connect(&block)
       Sguil.on_connect << block if block
     end
     
-    def on_disconnect(&block)
+    def before_disconnect(&block)
       Sguil.on_disconnect << block if block
     end
     
