@@ -56,7 +56,7 @@ module Sguil
         # format_user_message(data) if data =~ /UserMessage/
         # format_system_message(data) if data =~ /InsertSystemInfoMsg/
         # push('sensor', format_update_data(data)) if data =~ /UpdateSnortStats/ #/InsertEvent/
-
+        EventMachine::stop_event_loop
       end
     end
   end
