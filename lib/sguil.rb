@@ -11,6 +11,14 @@ module Sguil
   class << self
     include Sguil::Helpers::UI
 
+    def sensors
+      @sensors ||= []
+    end
+
+    def sensors=(sensors)
+      @sensors = sensors
+    end
+
     def ui
       @ui ||= Sguil::UI.new
     end

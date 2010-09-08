@@ -4,23 +4,13 @@ require 'sguil/parse'
 require 'pp'
 
 module Sguil
-
-  def Sguil.sensors
-    @sensors ||= []
-  end
-  
-  def Sguil.sensors=(sensors)
-    @sensors = sensors
-  end
-
   class Connect
     include Sguil::Callbacks
     include Sguil::Helpers::Commands
     include Sguil::Helpers::UI
 
     @client_count = 0
-    @sensors = []
-    attr_accessor :client_count, :server, :client, :port, :verbose, :socket, :sensors
+    attr_accessor :client_count, :server, :client, :port, :verbose, :socket
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
@@ -50,9 +40,7 @@ module Sguil
     end
 
     def monitor(sensors)
-      if sensors.is_a?(Array)
-        @socket.puts "MonitorSensors {#{sensors.join(' ')}}" if sensors
-      end
+      @socket.puts "MonitorSensors {#{sensors.join(' ')}}" if sensors && sensors.kind_of?(Array)
     end
 
     def kill!
@@ -77,7 +65,7 @@ module Sguil
           when %r|^NewSnortStats|
             format_and_publish(:new_snort_stats, line)
           when %r|^SensorList|
-            Sguil.sensors = format_and_publish(:sensors, line)
+            format_and_publish(:sensors, line)
             # when %r|^UserMessage|
             #   format_and_publish(:user_message, data)
             # when %r|^InsertSystemInfoMsg|

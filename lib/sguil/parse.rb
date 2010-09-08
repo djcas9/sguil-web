@@ -5,16 +5,9 @@ module Sguil
       @data = data
     end
 
-    def strip_brackets(data=nil)
-      parse_data = @data ? data : data
-      return parse_data[/\{(\S.+)\}/,1]
-    end
-
     def new_snort_stats
-      raw_data = strip_brackets
-      split_data = strip_brackets(raw_data)
-
-      split_data.to_s.split(/\} \{/).each do |insert|
+      raw_data = strip_brackets(strip_brackets(@data))
+      raw_data.to_s.split(/\} \{/).each do |insert|
         pp build_sensor_data(insert)
         # #push('sensor', build_sensor_data(insert))
       end
@@ -44,8 +37,14 @@ module Sguil
     end
 
     def sensors
-      @sensors = @data.to_s.gsub("SensorList", '').gsub(/\{|\}/, '').split(' ')
+      Sguil.sensors = @data.to_s.gsub("SensorList", '').gsub(/\{|\}/, '').split(' ')
     end
+
+    private
+    
+      def strip_brackets(data)
+        return data[/\{(\S.+)\}/,1]
+      end
 
   end
 end

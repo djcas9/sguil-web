@@ -10,7 +10,9 @@ before_receive_data do
   @sguil.login('demo', 'demo')
   @sguil.sensor_list
   puts @sguil.sensors
-  @sguil.monitor(@sguil.sensors)
+  puts Sguil.sensors
+  @sguil.monitor('DEMO_DMZ')
+  puts Sguil.sensors
 end
 
 @sguil.receive_data
