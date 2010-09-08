@@ -5,8 +5,18 @@ module Sguil
       @data = data
     end
     
+    def strip_brackets(data=nil)
+      data = data ? @data : data.nil?
+      (data[/\{(\S.+)\}/,1]).to_s
+    end
+    
     def new_snort_stats
-      
+      raw_data = strip_brackets
+      split_data = strip_brackets(raw_data)
+  
+      split_data.to_s.split(/\} \{/).each do |insert|
+        push('sensor', build_sensor_data(insert))
+      end
     end
     
   end

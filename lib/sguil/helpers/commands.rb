@@ -1,17 +1,19 @@
+require 'rest-client'
+
 module Sguil
   module Helpers
     module Commands
       include Sguil::Helpers::UI
       
       def sguil_connect
-        Sguil.ui.info "Client Connected."
         Sguil.on_connect.each { |block| block.call if block }
+        Sguil.ui.info "Client Connected."
       end
       
       def sguil_disconnect
-        Sguil.ui.warning "Client Disconnected."
         Sguil.on_disconnect.each { |block| block.call if block }
-        close_connection_after_writing
+        Sguil.ui.warning "Client Disconnected."
+        @socket.close
       end
       
       def format_and_publish(method,data)
@@ -19,8 +21,12 @@ module Sguil
         parser.send(method.to_sym) if parser.respond_to?(method.to_sym)
       end
       
-      def login
-        
+      def send(data)
+        @socket.puts(data)
+      end
+      
+      def push(path, data)
+        RestClient.post("http://#{@client}/#{path}", data)
       end
       
     end
