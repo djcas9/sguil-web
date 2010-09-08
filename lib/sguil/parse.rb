@@ -7,7 +7,7 @@ module Sguil
 
     def strip_brackets(data=nil)
       data = data ? @data : data.nil?
-      (data[/\{(\S.+)\}/,1]).to_s
+      return data[/\{(\S.+)\}/,1]
     end
 
     def new_snort_stats
