@@ -10,11 +10,17 @@ enable :sessions
 use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
 
 configure do
+
+  trap('SIGINT') do
+    @@sguil.kill! if defined?(@@sguil)
+    session = {}
+  end
+  
 end
 
 helpers do
   def has_session?
-    return true if defined?(@@fork)
+    return true if session[:login]
     false
   end
 end
@@ -30,8 +36,9 @@ end
 
 get '/login' do
   unless has_session?
-    @@sguil = Sguil::Connect.new({:client => "#{env['REMOTE_ADDR']}:8081", :verbose => true})
-    @@sguil.login({:username => 'demo', :password => 'demo'})
+    @@sguil = Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true})
+    @@sguil.login({:username => params[:username], :password => 'demo'})
+    session[:login] = true
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
     session[:agent] = env['HTTP_USER_AGENT']
@@ -45,6 +52,7 @@ end
 
 get '/logout' do
   begin
+    session = {}
     @@sguil.kill! if defined?(@@sguil)
   rescue IOError
   ensure
@@ -58,11 +66,11 @@ end
 
 #
 # Faye Subscriptions
-# 
+#
 # All commands sent from the sguild
 # server to be published to connected
 # client.
-# 
+#
 post '/sensor/updates' do
   env['faye.client'].publish('/sensor', params)
   "PUSH ADDED"
@@ -84,7 +92,7 @@ post '/insert/events' do
 end
 
 # Send Commands
-# 
+#
 # All commands that are sent to
 # the sguild server.
 #
@@ -94,13 +102,13 @@ get '/sensor_list' do
 end
 
 post '/connect' do
-  @@sguil.monitor('DEMO_DMZ') if has_session?
-  "CONNECT" 
+  @@sguil.monitor('DEMO_DMZ') if has_session? && defined?(@@sguil)
+  "CONNECT"
 end
 
 get '/connect' do
   @@sguil.sensor('demo') if has_session?
-  "CONNECT" 
+  "CONNECT"
 end
 
 post '/send/message' do
