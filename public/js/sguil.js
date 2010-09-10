@@ -191,15 +191,13 @@ var Sguil = {
 			<td>'+data.updated_at+'</td> \
 			</tr>';
 
-		if ($('table.sensor_stats tbody.content tr.'+data.id).length > 0) {
+		if ($('div.pane_data table.sensor_updates tbody.updates tr.'+data.id).length > 0) {
 
-			$('table.sensor_stats tbody.content tr.'+data.id).replaceWith(SensorData);
 			$('div.pane_data table.sensor_updates tbody.updates tr.'+data.id).replaceWith(SensorData)
 			highlight_new_row(data.id);
 
 		} else {
 
-			$('table.sensor_stats tbody.content').append(SensorData);
 			$('div.pane_data table.sensor_updates tbody.updates').prepend(SensorData)
 			highlight_new_row(data.id);
 
