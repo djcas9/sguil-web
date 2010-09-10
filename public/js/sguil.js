@@ -18,9 +18,9 @@ function hide_and_update_pane(url,selector) {
 }
 
 var Sguil = {
-	
+
 	Helpers: {
-		
+
 		flashMessages: function() {
 	    $('<div id="flash-messages"></div>').appendTo('body');
 	  },
@@ -28,15 +28,15 @@ var Sguil = {
 	  flashMessage: function(message) {
 	    $('<p class="flash-message" />').text(message).appendTo("#flash-messages");
 	  }
-		
+
 	},
-	
+
 	connect: function(){
 		$("#growl").notify({
 		    speed: 500,
 		    expires: 3000
 		});
-		
+
 		// $('div.pane_holder').resizable({
 		// 	maxHeight: 700,
 		// 	minHeight: 300,
@@ -45,10 +45,10 @@ var Sguil = {
 		// 	grid: 50,
 		// 	ghost: true
 		// });
-		
+
 		$.post('/connect', {});
 	},
-	
+
 	table: function(){
 	// 	$('#sensor_stats').livequery(function() {
 	// 		$('table.sensor_stats').trigger("update");
@@ -57,7 +57,7 @@ var Sguil = {
 	// 		});
 	// 	});
 	},
-	
+
 	send_message: function(){
 
 		$('form.new_user_message').livequery('submit',function() {
@@ -70,11 +70,11 @@ var Sguil = {
 		//$('input.message_input')
 
 	},
-	
+
 	add_system_message: function(system){
 		dateTime = new Date();
 		$('div.pane_holder div.pane_data ul.system_messages').append('<li><span class="time">'+dateTime+'</span> <span class="name">'+system.object+':</span> <span class="msg">'+system.message+'</span></li>');
-		
+
 		$('#growl').notify("create", {
 		    title: ''+system.object+' :',
 		    text: system.message
@@ -83,13 +83,13 @@ var Sguil = {
 		    speed: 500
 		});
 	},
-	
+
 	add_usermsg: function(data){
 		dateTime = new Date();
 		$('div.pane_holder div.pane_data div.user_messages ul.messages').append('<li><span class="time">'+dateTime+'</span> <span class="name">'+data.username+':</span> <span class="msg">'+data.message+'</span></li>');
-		
+
 		if (sguil_user != data.username) {
-		
+
 			$('#growl').notify("create", {
 			    title: ''+data.username+' Said:',
 			    text: data.message
@@ -97,28 +97,28 @@ var Sguil = {
 			    expires: 3000,
 			    speed: 500
 			});
-			
+
 		};
-		
+
 		$('ul.messages').scrollTo('100%', 1);
 	},
-	
+
 	update_pane: function(){
-		
+
 		var Pane = $('div.pane_holder div.pane_data');
-		
+
 		$('a.show_user_message').livequery('click',function() {
 			hide_and_update_pane('/user_message', 'div.user_messages');
 			$('ul.messages').scrollTo('100%', 1);
 			$('input#message_input').focus();
 			return false;
 		});
-		
+
 		$('a.show_system_messages').livequery('click',function() {
 			hide_and_update_pane('/system_messages', 'ul.system_messages');
 			return false;
 		});
-		
+
 		$('a.show_sensor_updates').livequery('click',function() {
 			hide_and_update_pane('/sensor_updates', 'table.sensor_updates');
 			return false;
@@ -132,7 +132,7 @@ var Sguil = {
 			}, 500);
 			return false;
 		});
-		
+
 		$('a.show_update_pane').livequery('click', function() {
 			$(this).replaceWith("<a class='hide_update_pane' href='#hide'>Hide Pane</a>");
 			$('div.options ul li.tab').show();
@@ -141,12 +141,12 @@ var Sguil = {
 			}, 500);
 			return false;
 		});
-		
+
 	},
 
-	insert_event: function(data){		
+	insert_event: function(data){
 		$('table.event_stats').trigger("update");
-		
+
 		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+' style="opacity: 0.1;"> \
 			<td>'+data.event_id+'</td> \
 			<td class="priority_'+data.priority+'">'+data.priority+'</td> \
@@ -158,7 +158,7 @@ var Sguil = {
 			<td class="destination_port">'+data.match+'</td> \
 			<td>'+data.created_at+'</td> \
 			</tr>';
-			
+
 			if ($('table.event_stats tbody.content tr.'+data.event_id).length > 0) {
 
 				$('table.event_stats tbody.content tr.'+data.event_id).replaceWith(EventData);
@@ -170,12 +170,12 @@ var Sguil = {
 				highlight_new_row(data.event_id);
 
 			};
-		
+
 	},
 
 	add_sensor: function(data){
 		$('table.sensor_stats').trigger("update");
-		
+
 		var SensorData = '<tr id="sensor'+data.id+'" class='+data.id+' style="opacity: 0.1;"> \
 			<td>'+data.id+'</td> \
 			<td class="name">'+data.name+'</td> \
@@ -192,17 +192,17 @@ var Sguil = {
 			</tr>';
 
 		if ($('table.sensor_stats tbody.content tr.'+data.id).length > 0) {
-			
+
 			$('table.sensor_stats tbody.content tr.'+data.id).replaceWith(SensorData);
 			$('div.pane_data table.sensor_updates tbody.updates tr.'+data.id).replaceWith(SensorData)
 			highlight_new_row(data.id);
-			
+
 		} else {
-			
+
 			$('table.sensor_stats tbody.content').append(SensorData);
 			$('div.pane_data table.sensor_updates tbody.updates').prepend(SensorData)
 			highlight_new_row(data.id);
-			
+
 		};
 		//$('table').trigger('sorton', [[4,1]]);
 	}
