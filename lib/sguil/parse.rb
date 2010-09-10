@@ -79,6 +79,9 @@ module Sguil
         raw_data = data[/\{(\S.+)\}/,1]
         datetime = raw_data[/\{(.+?)\}/,1]
         sig_name = raw_data[/.+\{(.+?)\}/,1]
+        if sig_name =~ /\} \{/
+          sig_name = 'N/A'
+        end
         data = raw_data.gsub(/\{(.+?)\}/, '').gsub('  ', ' ').split(' ')
 
         insert_event.merge!(

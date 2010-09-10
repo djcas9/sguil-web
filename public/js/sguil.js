@@ -154,8 +154,8 @@ var Sguil = {
 			<td class="name">'+data.signature+'</td> \
 			<td class="source_id">'+data.source_ip+'</td> \
 			<td class="source_port">'+data.source_port+'</td> \
-			<td class="destination_ip">'+data.bytes+'</td> \
-			<td class="destination_port">'+data.match+'</td> \
+			<td class="destination_ip">'+data.destination_ip+'</td> \
+			<td class="destination_port">'+data.destination_port+'</td> \
 			<td>'+data.created_at+'</td> \
 			</tr>';
 
