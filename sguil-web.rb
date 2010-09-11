@@ -15,7 +15,7 @@ configure do
     @@sguil.kill! if defined?(@@sguil)
     session = {}
   end
-  
+
 end
 
 helpers do
@@ -23,6 +23,10 @@ helpers do
     return true if session[:login]
     false
   end
+
+  def current_user
+  end
+
 end
 
 get '/' do
