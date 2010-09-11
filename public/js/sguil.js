@@ -50,12 +50,12 @@ var Sguil = {
 	},
 	
 	table: function(){
-	// 	$('#sensor_stats').livequery(function() {
-	// 		$('table.sensor_stats').trigger("update");
-	// 		$(this).tablesorter({
-	// 			sortlist: [[3,1]]
-	// 		});
-	// 	});
+		$('#event_stats').livequery(function() {
+			$('table.event_stats').trigger("update");
+			$(this).tablesorter({
+				sortlist: [[0,0]]
+			});
+		});
 	},
 	
 	send_message: function(){
@@ -145,9 +145,10 @@ var Sguil = {
 	},
 
 	insert_event: function(data){		
-		$('table.event_stats').trigger("update");
-		
-		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+' style="opacity: 0.1;"> \
+		if ($('.event_stats tbody.content tr.remove_me').length > 0) {
+			$('.event_stats tbody.content tr.remove_me').remove();
+		};
+		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+data.sensor_id+' style="opacity: 0.1;"> \
 			<td>'+data.event_id+'</td> \
 			<td class="priority_'+data.priority+'">'+data.priority+'</td> \
 			<td>'+data.sensor+'</td> \
@@ -159,18 +160,15 @@ var Sguil = {
 			<td>'+data.created_at+'</td> \
 			</tr>';
 			
-			if ($('table.event_stats tbody.content tr.'+data.event_id).length > 0) {
+			if ($('table.event_stats tbody.content tr.'+data.event_id+data.sensor_id).length > 0) {
 
-				$('table.event_stats tbody.content tr.'+data.event_id).replaceWith(EventData);
+				$('table.event_stats tbody.content tr.'+data.event_id+data.sensor_id).replaceWith(EventData);
 				highlight_new_row(data.event_id);
-
 			} else {
 
 				$('table.event_stats tbody.content').append(EventData);
-				highlight_new_row(data.event_id);
-
+				highlight_new_row(data.event_id+data.sensor_id);
 			};
-		
 	},
 
 	add_sensor: function(data){
@@ -191,7 +189,7 @@ var Sguil = {
 			<td>'+data.updated_at+'</td> \
 			</tr>';
 
-		if ($('table.sensor_stats tbody.content tr.'+data.id).length > 0) {
+		if ($('table.sensor_stats tbody.updates tr.'+data.id).length > 0) {
 			
 			$('table.sensor_stats tbody.content tr.'+data.id).replaceWith(SensorData);
 			$('div.pane_data table.sensor_updates tbody.updates tr.'+data.id).replaceWith(SensorData)
@@ -246,6 +244,8 @@ var system_message = sguil.subscribe('/system_message', function (system) {
 var events = sguil.subscribe('/add_event', function(data) {
 	console.log(data);
 	Sguil.insert_event(data);
+	$('table.event_stats').trigger("update"); 
+	$('table.event_stats').trigger("sorton",[0,0]);
 });
 
 var sensor = sguil.subscribe('/sensor', function (sensor) {
