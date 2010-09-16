@@ -11,6 +11,49 @@ module Sguil
   class << self
     include Sguil::Helpers::UI
 
+    attr_accessor :clients
+
+    def clients
+      @clients ||= {}
+    end
+
+    def add_client(name,socket)
+      Sguil.clients.merge!({name.to_sym => {
+        :socket => socket
+      }})
+    end
+
+    def add_fork(name,fork)
+      Sguil.clients[name.to_sym].merge!({:fork => fork}) if Sguil.clients.has_key?(name.to_sym)
+    end
+
+    def has(client_id)
+      return Sguil.clients.has_key?(client_id.to_sym) if client_id
+      false
+    end
+
+    def fork(client_id)
+      Sguil.clients[client_id.to_sym][:fork] if Sguil.clients.has_key?(client_id.to_sym)
+    end
+
+    def get(client_id)
+      Sguil.clients[client_id.to_sym][:socket] if Sguil.clients.has_key?(client_id.to_sym)
+    end
+
+    def kill_all!
+      Sguil.clients.each do |key,value|
+        value[:fork].kill!
+      end
+    end
+
+    def uid
+      "%10.6f" % Time.now.to_f
+    end
+
+    def kill(client_id)
+      Sguil.clients[client_id.to_sym][:fork].kill! if Sguil.clients.has_key?(client_id.to_sym)
+    end
+
     def sensors
       @sensors ||= []
     end
