@@ -45,8 +45,6 @@ var Sguil = {
 		// 	grid: 50,
 		// 	ghost: true
 		// });
-
-		$.post('/connect', {});
 	},
 
 	table: function(){

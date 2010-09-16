@@ -8,10 +8,25 @@ require 'sguil/connect'
 require 'sguil/version'
 
 module Sguil
+  
+  HOST = 'http://0.0.0.0:3000/sguil'
+  
   class << self
     include Sguil::Helpers::UI
-
+    extend Forwardable
     attr_accessor :clients
+    def_delegators :client, :publish, :subscribe
+
+    def client
+      ensure_em_running!
+      @client ||= Faye::Client.new(HOST)
+    end
+
+    def ensure_em_running!
+      Thread.new { EM.run } unless EM.reactor_running?
+      while not EM.reactor_running?
+      end
+    end
 
     def clients
       @clients ||= {}
