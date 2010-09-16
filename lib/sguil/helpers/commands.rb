@@ -27,8 +27,8 @@ module Sguil
 
       def push(path, data)
         begin
-          Sguil.client.publish(path, data)
-          #RestClient.post("http://#{@client}/#{path}", data)
+          #Sguil.client.publish(path, data)
+          RestClient.post("http://#{@client}/#{path}", data)
         rescue => error_message
           Sguil.ui.error "Error: #{error_message}"
         end
