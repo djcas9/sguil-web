@@ -1,11 +1,6 @@
 
 <script type="text/javascript">
-	if (localStorage.getItem('events')) {
-		$('table#event_stats tbody.content').html(localStorage.getItem('events'));
-		$.post('/connect', {});
-	} else {
-		$.post('/connect', {});
-	};
+	$.post('/connect', {});
 </script>
 
 <div class="container shadow">

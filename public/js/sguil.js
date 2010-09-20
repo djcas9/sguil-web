@@ -32,20 +32,14 @@ var Sguil = {
 	},
 
 	connect: function(){
+		
+		$('table#event_stats tbody.content').html(localStorage.getItem('events'));
+		$('table.sensor_updates tbody.updates').html(localStorage.getItem('sensors'));
+		
 		$("#growl").notify({
 		    speed: 500,
 		    expires: 3000
 		});
-
-		// $('div.pane_holder').resizable({
-		// 	maxHeight: 700,
-		// 	minHeight: 300,
-		// 	animate: true,
-		// 	handles: 'n',
-		// 	grid: 50,
-		// 	ghost: true
-		// });
-
 	},
 
 	table: function(){
@@ -198,6 +192,7 @@ var Sguil = {
 			highlight_new_row(data.id);
 
 		};
+		localStorage.setItem('sensors', $('table.sensor_updates tbody.updates').html());
 		//$('table').trigger('sorton', [[4,1]]);
 	}
 }
@@ -230,27 +225,22 @@ var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
 var sensor_array = new Array();
 
 var usermsg = sguil.subscribe('/usermsg/'+sguil_uid, function (usermsg) {
-	console.log(usermsg);
 	Sguil.add_usermsg(usermsg);
 });
 
 var system_message = sguil.subscribe('/system_message/'+sguil_uid, function (system) {
-	console.log(system);
 	Sguil.add_system_message(system);
 });
 
 var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
-	console.log(data);
 	// $('table#event_stats tbody.content')
 	Sguil.insert_event(data);
 	localStorage.setItem('events', $('table#event_stats tbody.content').html());
 	$('table.event_stats').trigger("update"); 
-	$('table.event_stats').trigger("sorton",[0,0]);
 });
 
 var sensor = sguil.subscribe('/sensor/'+sguil_uid, function (sensor) {
 	// sensor_array.push(sensor);
-	console.log(sensor);
 	Sguil.add_sensor(sensor);
 	//$('table.sensor_stats').trigger("update");
 });
