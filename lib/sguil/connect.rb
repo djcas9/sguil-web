@@ -10,15 +10,19 @@ module Sguil
     include Sguil::Helpers::UI
 
     @client_count = 0
-    attr_accessor :client_count, :server, :client, :port, :verbose, :socket, :username, :user_id
+    attr_accessor :client_count, :server, :client, :port, :verbose, :debug, :socket, :username, :user_id
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
       @client = options[:client] || '0.0.0.0:3000'
       @port = options[:port] || 7734
-      @verbose = options[:verbose] || true
       @uid = options[:uid]
       @socket = TCPSocket.open(@server, @port)
+      
+      # => Output
+      @verbose = options[:verbose] || true
+      @debug = options[:debug] || true
+      
       Sguil.ui.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
       sguil_connect
     end
