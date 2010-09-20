@@ -228,12 +228,12 @@ var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
 
 var sensor_array = new Array();
 
-var usermsg = sguil.subscribe('/usermsg', function (usermsg) {
+var usermsg = sguil.subscribe('/usermsg/'+sguil_uid, function (usermsg) {
 	console.log(usermsg);
 	Sguil.add_usermsg(usermsg);
 });
 
-var system_message = sguil.subscribe('/system_message', function (system) {
+var system_message = sguil.subscribe('/system_message/'+sguil_uid, function (system) {
 	console.log(system);
 	Sguil.add_system_message(system);
 });
@@ -245,7 +245,7 @@ var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
 	$('table.event_stats').trigger("sorton",[0,0]);
 });
 
-var sensor = sguil.subscribe('/sensor', function (sensor) {
+var sensor = sguil.subscribe('/sensor/'+sguil_uid, function (sensor) {
 	// sensor_array.push(sensor);
 	console.log(sensor);
 	Sguil.add_sensor(sensor);
