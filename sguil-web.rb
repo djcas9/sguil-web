@@ -1,4 +1,5 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+
 require 'rubygems'
 require 'sinatra'
 require 'faye'
@@ -11,8 +12,6 @@ use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
 
 configure do
   
-  
-  #
   # Depending On The Web Server You
   # May Need To Set The Below Manually
   @@sguil_web_server = env['HTTP_HOST']
@@ -25,12 +24,18 @@ configure do
 end
 
 helpers do
+  
+  def user_id
+    session[:client_id]
+  end
+  
   def has_session?
-    return true if Sguil.has(session[:client_id])
+    return true if Sguil.has(user_id)
     false
   end
 
   def current_user
+    Sguil.get(user_id)
   end
 
 end
@@ -46,13 +51,16 @@ end
 
 get '/login' do
   unless has_session?
+    
+    #
+    # Create User Session
+    # 
+    # Login to the sguil server &
+    # return a socket.
+    # 
     session[:client_id] = Sguil.uid
-    
-    Sguil.add_client(session[:client_id], Sguil::Connect.new({:verbose => true, :uid => session[:client_id]}))
-    
-    Sguil.get(session[:client_id]).login({:username => params[:username], :password => 'demo'})
-    
-    # @@sguil.login({:username => params[:username], :password => 'demo'})
+    Sguil.add_client(user_id, Sguil::Connect.new({:verbose => true, :uid => user_id}))
+    current_user.login({:username => params[:username], :password => 'demo'})
     
     session[:login] = true
     session[:username] = 'demo'
@@ -61,8 +69,8 @@ get '/login' do
     session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
     
     
-    Sguil.add_fork(session[:client_id], Thread.new { Sguil.get(session[:client_id]).receive_data })
-    #@@fork = Thread.new { @@sguil.receive_data }
+    Sguil.add_fork(user_id, Thread.new { current_user.receive_data })
+    
     redirect '/' if has_session?
   else
     redirect '/welcome'
@@ -71,7 +79,7 @@ end
 
 get '/logout' do
   begin
-    Sguil.kill(session[:client_id])
+    Sguil.kill(user_id)
     session = {}
   rescue IOError
   ensure
@@ -116,20 +124,20 @@ end
 # the sguild server.
 #
 get '/sensor_list' do
-  Sguil.get(session[:client_id]).sensor_list if has_session?
+  current_user.sensor_list if has_session?
   'SENSOR_LIST'
 end
 
 post '/connect' do
-  Sguil.get(session[:client_id]).monitor('DEMO_DMZ') if has_session? #&& defined?(@@sguil)
+  current_user.monitor('DEMO_DMZ') if has_session?
   "CONNECT"
 end
 
 get '/connect' do
-  Sguil.get(session[:client_id]).sensor('demo') if has_session?
+  current_user.sensor('demo') if has_session?
   "CONNECT"
 end
 
 post '/send/message' do
-  Sguil.get(session[:client_id]).send_message("#{params[:msg]}")
+  current_user.send_message("#{params[:msg]}")
 end

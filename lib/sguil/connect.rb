@@ -10,6 +10,8 @@ module Sguil
     include Sguil::Helpers::UI
 
     @client_count = 0
+    @user_id = ''
+    
     attr_accessor :client_count, :server, :client, :port, :verbose, :debug, :socket, :username, :user_id
 
     def initialize(options={})
@@ -17,12 +19,12 @@ module Sguil
       @client = options[:client] || 'lookycode.com:3000'
       @port = options[:port] || 7734
       @uid = options[:uid]
-      @socket = TCPSocket.open(@server, @port)
       
       # => Output
       @verbose = options[:verbose] || true
       @debug = options[:debug] || true
       
+      @socket = TCPSocket.open(@server, @port)
       Sguil.ui.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
       sguil_connect
     end
@@ -30,6 +32,7 @@ module Sguil
     def login(options={})
       username = options[:username] || 'demo'
       password = options[:password] || 'demo'
+      @username = username
       send("ValidateUser #{username} #{password}")
     end
 
