@@ -23,7 +23,7 @@
 			var sguil_agent = '<%= session[:agent] %>'
 			var sguil_lang = '<%= session[:lang] %>';
 			var sguil_addr = '<%= session[:ipaddr] %>';
-			var sguil_server = "<%= env['HTTP_HOST'] %>";
+			var sguil_server = "<%= @@sguil_web_server %>";
     </script>
 		
 	  <script src="js/sguil.js" type="text/javascript"></script>

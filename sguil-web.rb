@@ -10,6 +10,12 @@ enable :sessions
 use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
 
 configure do
+  
+  
+  #
+  # Depending On The Web Server You
+  # May Need To Set The Below Manually
+  @@sguil_web_server = env['HTTP_HOST']
 
   trap('SIGINT') do
     Sguil.kill_all!
@@ -42,7 +48,7 @@ get '/login' do
   unless has_session?
     session[:client_id] = Sguil.uid
     
-    Sguil.add_client(session[:client_id], Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true, :uid => session[:client_id]}))
+    Sguil.add_client(session[:client_id], Sguil::Connect.new({:verbose => true, :uid => session[:client_id]}))
     
     Sguil.get(session[:client_id]).login({:username => params[:username], :password => 'demo'})
     
