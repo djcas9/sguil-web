@@ -28,7 +28,7 @@ module Sguil
       def push(path, data)
         begin
           #Sguil.client.publish(path, data)
-          data.merge!({:uid => uid}) if data.is_a?(Hash)
+          data.merge!({:uid => @uid}) if data.is_a?(Hash)
           RestClient.post("http://#{@client}/#{path}", data)
         rescue => error_message
           Sguil.ui.error "Error: #{error_message}"
