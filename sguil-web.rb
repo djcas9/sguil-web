@@ -84,22 +84,22 @@ end
 # client.
 #
 post '/sensor/updates' do
-  env['faye.client'].publish('/sensor', params)
+  env['faye.client'].publish("/sensor/#{params[:uid]}", params)
   "PUSH ADDED"
 end
 
 post '/user/message' do
-  env['faye.client'].publish('/usermsg', params)
+  env['faye.client'].publish("/usermsg/#{params[:uid]}", params)
   "USERMSG"
 end
 
 post '/system/message' do
-  env['faye.client'].publish('/system_message', params)
+  env['faye.client'].publish("/system_message/#{params[:uid]}", params)
   "SYSMSG"
 end
 
 post '/insert/events' do
-  env['faye.client'].publish('/add_event', params)
+  env['faye.client'].publish("/add_event/#{params[:uid]}", params)
   "SYSMSG"
 end
 
