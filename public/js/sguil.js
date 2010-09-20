@@ -5,11 +5,11 @@ function scrollToUpdate (id) {
 	$.scrollTo('tr.'+id, 1000);
 }
 
-function highlight_new_row(id) {
-	var tableRow = 'tr.' + id;
-	$(tableRow).animate({opacity: 1}, 3000);
-	//$(document).bind(scrollToUpdate(id));
-}
+// function highlight_new_row(id) {
+// 	var tableRow = 'tr.' + id;
+// 	$(tableRow).animate({opacity: 1}, 3000);
+// 	//$(document).bind(scrollToUpdate(id));
+// }
 
 function hide_and_update_pane(url,selector) {
 	var Pane = $('div.pane_holder div.pane_data');
@@ -154,13 +154,9 @@ var Sguil = {
 			</tr>';
 			
 			if ($('table.event_stats tbody.content tr.'+data.event_id+data.sensor_id).length > 0) {
-
 				$('table.event_stats tbody.content tr.'+data.event_id+data.sensor_id).replaceWith(EventData);
-				highlight_new_row(data.event_id);
 			} else {
-
 				$('table.event_stats tbody.content').append(EventData);
-				highlight_new_row(data.event_id+data.sensor_id);
 			};
 	},
 
@@ -184,14 +180,10 @@ var Sguil = {
 
 		if ($('div.pane_data table.sensor_updates tbody.updates tr.'+data.id).length > 0) {
 			$('div.pane_data table.sensor_updates tbody.updates tr.'+data.id).replaceWith(SensorData)
-			highlight_new_row(data.id);
-
 		} else {
-
 			$('div.pane_data table.sensor_updates tbody.updates').prepend(SensorData)
-			highlight_new_row(data.id);
-
 		};
+		
 		localStorage.setItem('sensors', $('table.sensor_updates tbody.updates').html());
 		//$('table').trigger('sorton', [[4,1]]);
 	}
