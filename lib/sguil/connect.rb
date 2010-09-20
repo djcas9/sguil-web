@@ -10,7 +10,7 @@ module Sguil
     include Sguil::Helpers::UI
 
     @client_count = 0
-    attr_accessor :client_count, :server, :client, :port, :verbose, :socket
+    attr_accessor :client_count, :server, :client, :port, :verbose, :socket, :username, :user_id
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
@@ -68,6 +68,8 @@ module Sguil
         end
 
         case line
+        when %r|^UserID|
+          @user_id ||= return_user_id(line)
         when %r|^NewSnortStats|
           push 'sensor/updates', format_and_publish(:new_snort_stats, line)
         when %r|^SensorList|

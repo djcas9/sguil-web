@@ -36,6 +36,10 @@ module Sguil
       Sguil.sensors = chop_at('SensorList')
     end
 
+    def return_user_id
+      return @data.gsub('UserID', '').to_i
+    end
+
     def update_snort_stats
       update_sensor_data(strip_brackets(@data))
     end

@@ -10,6 +10,10 @@ module Sguil
       show_message :VERBOSE, "#{message}", STDOUT
     end
 
+    def debug(message)
+      show_message :DEBUG, "#{message}", STDOUT
+    end
+
     def warning(message)
       show_message :WARN, "#{message}", STDOUT
     end
@@ -30,6 +34,8 @@ module Sguil
         type = yellow(type)
       when :ERROR
         type = red(type)
+      when :DEBUG
+        type = green(type)
       when :VERBOSE
         type = blue(type)
       end
