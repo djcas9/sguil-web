@@ -243,7 +243,7 @@ var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
 	console.log(data);
 	// $('table#event_stats tbody.content')
 	Sguil.insert_event(data);
-	localStorage.setItem(sguil_uid + '_events', $('table#event_stats tbody.content').html);
+	localStorage.setItem(sguil_uid + '_events', $('table#event_stats tbody.content').html());
 	$('table.event_stats').trigger("update"); 
 	$('table.event_stats').trigger("sorton",[0,0]);
 });
