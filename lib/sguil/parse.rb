@@ -37,7 +37,7 @@ module Sguil
     end
 
     def update_snort_stats
-      build_sensor_data(@data)
+      update_sensor_data(strip_brackets(@data))
     end
 
     private
@@ -53,7 +53,6 @@ module Sguil
       def build_sensor_data(data)
         sensor_data = Hash.new
         datetime = data[/\{(.+?)\}/,1]
-        sig_name = data[/.+\{(.+?)\}/,1]
         data = data.gsub(/\{(.+?)\}/, '').gsub('  ', ' ').split(' ')
 
         sensor_data.merge!(
