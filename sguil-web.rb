@@ -37,6 +37,10 @@ helpers do
   def current_user
     Sguil.get(user_id)
   end
+  
+  def sguil_web_server
+    @@sguil_web_server
+  end
 
 end
 
