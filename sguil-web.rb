@@ -41,14 +41,19 @@ end
 get '/login' do
   unless has_session?
     session[:client_id] = Sguil.uid
-    Sguil.add_client(session[:client_id], Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true}))
+    
+    Sguil.add_client(session[:client_id], Sguil::Connect.new({:client => env['HTTP_HOST'], :verbose => true, :uid => session[:client_id]}))
+    
     Sguil.get(session[:client_id]).login({:username => params[:username], :password => 'demo'})
+    
     #@@sguil.login({:username => params[:username], :password => 'demo'})
     session[:login] = true
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
     session[:agent] = env['HTTP_USER_AGENT']
     session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
+    
+    
     Sguil.add_fork(session[:client_id], Thread.new { Sguil.get(session[:client_id]).receive_data })
     #@@fork = Thread.new { @@sguil.receive_data }
     redirect '/' if has_session?

@@ -17,6 +17,7 @@ module Sguil
       @client = options[:client] || '0.0.0.0:3000'
       @port = options[:port] || 7734
       @verbose = options[:verbose] || true
+      @uid = options[:uid]
       @socket = TCPSocket.open(@server, @port)
       Sguil.ui.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
       sguil_connect
