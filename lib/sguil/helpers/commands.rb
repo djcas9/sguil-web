@@ -30,6 +30,7 @@ module Sguil
           #Sguil.client.publish(path, data)
           data.merge!({:uid => @uid}) if data.is_a?(Hash)
           RestClient.post("http://#{@client}/#{path}", data)
+          Sguil.ui.verbose("PATH: http://#{@client}/#{path}\nPARAMS: #{data.inspect}") if @verbose
         rescue => error_message
           Sguil.ui.error "Error: #{error_message}"
         end
