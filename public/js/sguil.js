@@ -46,7 +46,6 @@ var Sguil = {
 		// 	ghost: true
 		// });
 
-		$.post('/connect', {});
 	},
 
 	table: function(){
@@ -205,10 +204,12 @@ var Sguil = {
 
 
 $(document).ready(function() {
+	
 	Sguil.connect();
 	Sguil.table();
 	Sguil.send_message();
 	Sguil.update_pane();
+	
 });
 
 // Logger = {
@@ -240,7 +241,9 @@ var system_message = sguil.subscribe('/system_message/'+sguil_uid, function (sys
 
 var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
 	console.log(data);
+	// $('table#event_stats tbody.content')
 	Sguil.insert_event(data);
+	localStorage.setItem(sguil_uid + '_events', $('table#event_stats tbody.content').html);
 	$('table.event_stats').trigger("update"); 
 	$('table.event_stats').trigger("sorton",[0,0]);
 });

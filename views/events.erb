@@ -1,3 +1,13 @@
+
+<script type="text/javascript">
+	if (localStorage.getItem(sguil_uid + '_events')) {
+		$('table#event_stats tbody.content').append(localStorage.getItem(sguil_uid + '_events'));
+		$.post('/connect', {});
+	} else {
+		$.post('/connect', {});
+	};
+</script>
+
 <div class="container shadow">
 	
 	<table id='event_stats' class='event_stats' border="0" cellspacing="0" cellpadding="0">

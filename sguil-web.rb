@@ -46,7 +46,8 @@ get '/login' do
     
     Sguil.get(session[:client_id]).login({:username => params[:username], :password => 'demo'})
     
-    #@@sguil.login({:username => params[:username], :password => 'demo'})
+    # @@sguil.login({:username => params[:username], :password => 'demo'})
+    
     session[:login] = true
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
