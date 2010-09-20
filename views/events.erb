@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
-	if (localStorage.getItem(sguil_uid + '_events')) {
-		$('table#event_stats tbody.content').html(localStorage.getItem(sguil_uid + '_events'));
+	if (localStorage.getItem('events')) {
+		$('table#event_stats tbody.content').html(localStorage.getItem('events'));
 		$.post('/connect', {});
 	} else {
 		$.post('/connect', {});
