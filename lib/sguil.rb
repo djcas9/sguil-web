@@ -62,7 +62,7 @@ module Sguil
     end
 
     def uid
-      "%10.6f" % Time.now.to_f
+      "client_#{Time.now.to_i}#{Time.now.usec}"
     end
 
     def kill(client_id)
