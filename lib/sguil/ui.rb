@@ -33,7 +33,11 @@ module Sguil
       when :VERBOSE
         type = blue(type)
       end
-      std.puts("#{type}: #{message}") if std.respond_to?(:puts)
+      
+      message.split("\n").each do |msg|
+        std.puts("#{type}: #{msg}") if std.respond_to?(:puts)
+      end
+      
     end
 
   end

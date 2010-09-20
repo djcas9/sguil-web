@@ -233,7 +233,7 @@ var usermsg = sguil.subscribe('/usermsg', function (usermsg) {
 	Sguil.add_usermsg(usermsg);
 });
 
-var system_message = sguil.subscribe('/system_message/', function (system) {
+var system_message = sguil.subscribe('/system_message', function (system) {
 	console.log(system);
 	Sguil.add_system_message(system);
 });
