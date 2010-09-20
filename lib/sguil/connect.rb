@@ -61,7 +61,7 @@ module Sguil
 
         @unknown_command = true
         
-        #Sguil.ui.verbose(line) if @verbose
+        Sguil.ui.verbose(line) if @verbose
 
         Sguil.callbacks.each do |block|
           (block.call(self,line) && @unknown_command = false) if block

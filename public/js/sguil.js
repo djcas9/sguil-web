@@ -33,8 +33,21 @@ var Sguil = {
 
 	connect: function(){
 		
-		$('table#event_stats tbody.content').html(localStorage.getItem('events'));
-		$('table.sensor_updates tbody.updates').html(localStorage.getItem('sensors'));
+		if (localStorage.getItem('events')) {
+			$('table#event_stats tbody.content').html(localStorage.getItem('events'));
+		};
+		
+		if (localStorage.getItem('sensors')) {
+			$('table.sensor_updates tbody.updates').html(localStorage.getItem('sensors'));
+		};
+		
+		if (localStorage.getItem('chat')) {
+			$('div.user_messages ul.messages').replaceWith(localStorage.getItem('chat'));
+		};
+		
+		if (localStorage.getItem('system_message')) {
+			$('div.system_messages').replaceWith(localStorage.getItem('system_message'));
+		};
 		
 		$("#growl").notify({
 		    speed: 500,
@@ -185,7 +198,7 @@ var Sguil = {
 		};
 		
 		localStorage.setItem('sensors', $('table.sensor_updates tbody.updates').html());
-		//$('table').trigger('sorton', [[4,1]]);
+		
 	}
 }
 
@@ -199,29 +212,32 @@ $(document).ready(function() {
 	
 });
 
-// Logger = {
-// 	incoming: function(message, callback) {
-// 		console.log('incoming', message);
-// 		callback(message)
-// 	},
-// 	outgoing: function(message, callback) {
-// 		console.log('outgoing', message);
-// 		callback(message);
-// 	}
-// };
+Logger = {
+	incoming: function(message, callback) {
+		console.log('incoming', message);
+		callback(message)
+	},
+	outgoing: function(message, callback) {
+		console.log('outgoing', message);
+		callback(message);
+	}
+};
 
 var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
+
 // Add Logger
-//sguil.addExtension(Logger);
+// sguil.addExtension(Logger);
 
 var sensor_array = new Array();
 
 var usermsg = sguil.subscribe('/usermsg/'+sguil_uid, function (usermsg) {
 	Sguil.add_usermsg(usermsg);
+	localStorage.setItem('chat', $('div.user_messages ul.messages').html());
 });
 
 var system_message = sguil.subscribe('/system_message/'+sguil_uid, function (system) {
 	Sguil.add_system_message(system);
+	localStorage.setItem('system_message', $('div.system_messages').html());
 });
 
 var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
@@ -232,7 +248,6 @@ var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
 });
 
 var sensor = sguil.subscribe('/sensor/'+sguil_uid, function (sensor) {
-	// sensor_array.push(sensor);
 	Sguil.add_sensor(sensor);
-	//$('table.sensor_stats').trigger("update");
+	// $('table.sensor_stats').trigger("update");
 });
