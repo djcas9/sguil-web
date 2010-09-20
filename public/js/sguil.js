@@ -141,7 +141,7 @@ var Sguil = {
 		if ($('.event_stats tbody.content tr.remove_me').length > 0) {
 			$('.event_stats tbody.content tr.remove_me').remove();
 		};
-		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+data.sensor_id+' style="opacity: 0.1;"> \
+		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+data.sensor_id+'> \
 			<td>'+data.event_id+'</td> \
 			<td class="priority_'+data.priority+'">'+data.priority+'</td> \
 			<td>'+data.sensor+'</td> \
@@ -163,7 +163,7 @@ var Sguil = {
 	add_sensor: function(data){
 		$('table.sensor_stats').trigger("update");
 
-		var SensorData = '<tr id="sensor'+data.id+'" class='+data.id+' style="opacity: 0.1;"> \
+		var SensorData = '<tr id="sensor'+data.id+'" class='+data.id+'> \
 			<td>'+data.id+'</td> \
 			<td class="name">'+data.name+'</td> \
 			<td>'+data.packet_loss+'</td> \
