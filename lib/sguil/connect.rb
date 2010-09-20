@@ -16,7 +16,7 @@ module Sguil
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
-      @client = options[:client] || 'lookycode.com:3000'
+      @client = options[:client] || '0.0.0.0:3000'
       @port = options[:port] || 7734
       @uid = options[:uid]
       

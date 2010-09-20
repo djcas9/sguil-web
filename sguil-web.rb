@@ -11,10 +11,10 @@ enable :sessions
 use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
 
 configure do
-  
+
   # Depending On The Web Server You
   # May Need To Set The Below Manually
-  @@sguil_web_server = env['HTTP_HOST']
+  @@sguil_web_server = 'lookycode.com:3000'
 
   trap('SIGINT') do
     Sguil.kill_all!
@@ -24,11 +24,11 @@ configure do
 end
 
 helpers do
-  
+
   def user_id
     session[:client_id]
   end
-  
+
   def has_session?
     return true if Sguil.has(user_id)
     false
@@ -51,26 +51,33 @@ end
 
 get '/login' do
   unless has_session?
-    
+
     #
     # Create User Session
-    # 
+    #
     # Login to the sguil server &
     # return a socket.
-    # 
+    #
     session[:client_id] = Sguil.uid
-    Sguil.add_client(user_id, Sguil::Connect.new({:verbose => true, :uid => user_id}))
-    current_user.login({:username => params[:username], :password => 'demo'})
     
+    Sguil.add_client(user_id, Sguil::Connect.new({
+      :client => @@sguil_web_server,
+      :verbose => true,
+      :debug => true,
+      :uid => user_id
+    }))
+    
+    current_user.login({:username => params[:username], :password => 'demo'})
+
     session[:login] = true
     session[:username] = 'demo'
     session[:ipaddr] = env['REMOTE_ADDR']
     session[:agent] = env['HTTP_USER_AGENT']
     session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
-    
-    
+
+
     Sguil.add_fork(user_id, Thread.new { current_user.receive_data })
-    
+
     redirect '/' if has_session?
   else
     redirect '/welcome'
