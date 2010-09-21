@@ -9,8 +9,6 @@ require 'sguil/version'
 
 module Sguil
   
-  HOST = 'http://0.0.0.0:3000/sguil'
-  
   class << self
     include Sguil::Helpers::UI
     attr_accessor :clients

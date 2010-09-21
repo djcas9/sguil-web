@@ -66,21 +66,20 @@ get '/login' do
     
     Sguil.add_client(user_id, Sguil::Connect.new({
       :client => @@sguil_web_server,
-      :verbose => true,
-      :debug => true,
+      :logger => [:verbose, :debug, :info],
       :uid => user_id
     }))
     
-    current_user.login({:username => params[:username], :password => 'demo'})
-
-    session[:login] = true
-    session[:username] = 'demo'
-    session[:ipaddr] = env['REMOTE_ADDR']
-    session[:agent] = env['HTTP_USER_AGENT']
-    session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
-
-
-    Sguil.add_fork(user_id, Thread.new { current_user.receive_data })
+    # current_user.login({:username => params[:username], :password => 'demo'})
+    # 
+    # session[:login] = true
+    # session[:username] = 'demo'
+    # session[:ipaddr] = env['REMOTE_ADDR']
+    # session[:agent] = env['HTTP_USER_AGENT']
+    # session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
+    # 
+    # 
+    # Sguil.add_fork(user_id, Thread.new { current_user.receive_data })
 
     redirect '/' if has_session?
   else

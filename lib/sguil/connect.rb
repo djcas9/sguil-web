@@ -26,6 +26,8 @@ module Sguil
       @verbose = options[:verbose] || true
       @debug = options[:debug] || true
       
+      Sguil.ui.logger(options[:logger] || [])
+      
       @socket = TCPSocket.open(@server, @port)
       Sguil.ui.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
       sguil_connect
@@ -81,7 +83,7 @@ module Sguil
 
         Sguil.ui.verbose(line) if @verbose
         
-        Sguil.callbacks.each do { |block| block.call(self,line) if block }
+        Sguil.callbacks.each { |block| block.call(self,line) if block }
 
         case line
         when %r|^UserID|
