@@ -61,11 +61,11 @@ var Sguil = {
 		// };
 		
 		if (localStorage.getItem('chat')) {
-			$('div.user_messages ul.messages').replaceWith(localStorage.getItem('chat'));
+			$('div.user_messages ul.messages').html(localStorage.getItem('chat'));
 		};
 		
 		if (localStorage.getItem('system_message')) {
-			$('div.system_messages').replaceWith(localStorage.getItem('system_message'));
+			$('div.system_messages').html(localStorage.getItem('system_message'));
 		};
 		
 		$("#growl").notify({
