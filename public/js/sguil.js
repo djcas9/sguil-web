@@ -33,13 +33,13 @@ var Sguil = {
 
 	connect: function(){
 		
-		if (localStorage.getItem('events')) {
-			$('table#event_stats tbody.content').html(localStorage.getItem('events'));
-		};
-		
-		if (localStorage.getItem('sensors')) {
-			$('table.sensor_updates tbody.updates').html(localStorage.getItem('sensors'));
-		};
+		// if (localStorage.getItem('events')) {
+		// 	$('table#event_stats tbody.content').html(localStorage.getItem('events'));
+		// };
+		// 
+		// if (localStorage.getItem('sensors')) {
+		// 	$('table.sensor_updates tbody.updates').html(localStorage.getItem('sensors'));
+		// };
 		
 		if (localStorage.getItem('chat')) {
 			$('div.user_messages ul.messages').replaceWith(localStorage.getItem('chat'));
@@ -212,18 +212,18 @@ $(document).ready(function() {
 	
 });
 
-Logger = {
-	incoming: function(message, callback) {
-		console.log('incoming', message);
-		callback(message)
-	},
-	outgoing: function(message, callback) {
-		console.log('outgoing', message);
-		callback(message);
-	}
-};
-
 var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
+
+// Logger = {
+// 	incoming: function(message, callback) {
+// 		console.log('incoming', message);
+// 		callback(message)
+// 	},
+// 	outgoing: function(message, callback) {
+// 		console.log('outgoing', message);
+// 		callback(message);
+// 	}
+// };
 
 // Add Logger
 // sguil.addExtension(Logger);
@@ -243,7 +243,6 @@ var system_message = sguil.subscribe('/system_message/'+sguil_uid, function (sys
 var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
 	// $('table#event_stats tbody.content')
 	Sguil.insert_event(data);
-	localStorage.setItem('events', $('table#event_stats tbody.content').html());
 	$('table.event_stats').trigger("update"); 
 });
 
