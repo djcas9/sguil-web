@@ -16,6 +16,7 @@ doc
 pkg
 
 ## PROJECT::SPECIFIC
+example.rb
 .bundle/
 .document
-gill.gemspec
+sguil-web.gemspec
