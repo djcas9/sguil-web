@@ -1,20 +1,19 @@
 require 'faye'
 require 'json'
 require 'sguil/parse'
-require 'pp'
 
 module Sguil
   class Connect
     include Sguil::Callbacks
     include Sguil::Helpers::Commands
     include Sguil::Helpers::UI
-    extend Forwardable
+    # extend Forwardable
 
     @client_count = 0
     @user_id = ''
     
     attr_accessor :client_count, :server, :client, :port, :verbose, :debug, :socket, :username, :user_id
-    def_delegators :client, :publish, :subscribe
+    # def_delegators :client, :publish, :subscribe
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
@@ -33,16 +32,16 @@ module Sguil
       sguil_connect
     end
 
-    def client
-      ensure_em_running!
-      @client ||= Faye::Client.new("http://#{@client}/sguil")
-    end
-
-    def ensure_em_running!
-      Thread.new { EM.run } unless EM.reactor_running?
-      while not EM.reactor_running?
-      end
-    end
+    # def client
+    #   ensure_em_running!
+    #   @client ||= Faye::Client.new("http://#{@client}/sguil")
+    # end
+    # 
+    # def ensure_em_running!
+    #   Thread.new { EM.run } unless EM.reactor_running?
+    #   while not EM.reactor_running?
+    #   end
+    # end
 
     def login(options={})
       username = options[:username] || 'demo'

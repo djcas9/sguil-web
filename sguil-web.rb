@@ -6,6 +6,7 @@ require 'faye'
 require 'pp'
 
 require 'sguil'
+require 'sguil-plugins'
 
 enable :sessions
 use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
@@ -66,7 +67,7 @@ get '/login' do
     session[:client_id] = Sguil.uid
     
     Sguil.add_client(user_id, Sguil::Connect.new({
-      :client => @@sguil_web_server,
+      :client => sguil_web_server,
       :logger => [:verbose, :debug, :info],
       :uid => user_id
     }))

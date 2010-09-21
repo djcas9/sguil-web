@@ -1,3 +1,10 @@
+
+<% content_for :head do %>
+	<script type="text/javascript">
+		$.post('/connect', { sensors: 'DEMO_DMZ' });
+	</script>
+<% end %>
+
 <div class="container shadow">
 	
 	<table id='event_stats' class='event_stats' border="0" cellspacing="0" cellpadding="0">
