@@ -14,7 +14,7 @@ configure do
 
   # Depending On The Web Server You
   # May Need To Set The Below Manually
-  @@sguil_web_server = 'lookycode.com:3000'
+  @@sguil_web_server = '0.0.0.0:3000'
 
   trap('SIGINT') do
     Sguil.kill_all!
@@ -145,7 +145,7 @@ post '/connect' do
 end
 
 get '/connect' do
-  current_user.sensor('demo') if has_session?
+  current_user.sensor(params[:sensors]) if has_session?
   "CONNECT"
 end
 
