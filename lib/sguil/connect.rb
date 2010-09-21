@@ -47,6 +47,8 @@ module Sguil
       username = options[:username] || 'demo'
       password = options[:password] || 'demo'
       @username = username
+      
+      Sguil.ui.info "New Login - #{username}"
       send("ValidateUser #{username} #{password}")
     end
 
@@ -63,6 +65,7 @@ module Sguil
     end
 
     def monitor(sensors)
+      Sguil.ui.info "Connecting to sensors - #{sensors}"
       if sensors
         return send("MonitorSensors {#{sensors.join(' ')}}") if sensors.kind_of?(Array)
         send("MonitorSensors {#{sensors}}")
@@ -70,6 +73,7 @@ module Sguil
     end
 
     def kill!
+      Sguil.ui.info "Killing Connection - #{@uid}"
       @socket.close
       exit -1
     end
@@ -82,7 +86,7 @@ module Sguil
 
         Sguil.ui.verbose(line) if @verbose
         
-        Sguil.callbacks.each { |block| block.call(self,line) if block }
+        #Sguil.callbacks.each { |block| block.call(self,line) if block }
 
         case line
         when %r|^NewSnortStats|
