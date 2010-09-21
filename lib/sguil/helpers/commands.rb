@@ -1,5 +1,5 @@
 #
-# Sguil[web] - A web client for the popular Sguil security analysis tool.
+# SguilWeb - A web client for the popular Sguil security analysis tool.
 #
 # Copyright (c) 2010 Dustin Willis Webber (dustin.webber at gmail.com)
 #
