@@ -2,8 +2,16 @@
 <% content_for :head do %>
 	<script type="text/javascript">
 		$.post('/connect', { sensors: 'DEMO_DMZ' });
+		
+		$('a.test').live('click', function() {
+			$.post('/connect', { sensors: 'DEMO_DMZ' });
+			return false;
+		});
+		
 	</script>
 <% end %>
+
+<a class='test' href="#test">Connect</a>
 
 <div class="container shadow">
 	
