@@ -4,7 +4,7 @@ require 'sguil'
 
 include Sguil::Callbacks
 
-@sguil = Sguil.connect({:client => '0.0.0.0', :verbose => true})
+@sguil = Sguil.connect({:client => '0.0.0.0:3000', :verbose => true})
 
 before_receive_data do 
   @sguil.login(:username => 'demo', :password => 'demo')

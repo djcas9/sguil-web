@@ -12,7 +12,7 @@ module Sguil
     @client_count = 0
     @user_id = ''
     
-    attr_accessor :client_count, :server, :client, :port, :verbose, :debug, :socket, :username, :user_id
+    attr_accessor :client_count, :server, :client, :port, :socket, :username, :user_id
     # def_delegators :client, :publish, :subscribe
 
     def initialize(options={})
@@ -20,10 +20,6 @@ module Sguil
       @client = options[:client] || '0.0.0.0:3000'
       @port = options[:port] || 7734
       @uid = options[:uid]
-      
-      # => Output
-      @verbose = options[:verbose] || true
-      @debug = options[:debug] || true
       
       Sguil.ui.logger(options[:logger] || [])
       
@@ -84,7 +80,7 @@ module Sguil
 
       while line = @socket.gets do
 
-        Sguil.ui.verbose(line) if @verbose
+        Sguil.ui.verbose(line)
         
         #Sguil.callbacks.each { |block| block.call(self,line) if block }
 
@@ -102,7 +98,7 @@ module Sguil
         when %r|^InsertEvent|
           push 'insert/events', format_and_publish(:insert_event, line)
         when %r|^UserID|
-          @user_id ||= return_user_id(line)
+          @user_id ||= line.gsub('UserID', '').to_i
         end
       end
     end
