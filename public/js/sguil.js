@@ -33,6 +33,8 @@ var Sguil = {
 
 	connect: function(){
 		
+		$.post('/connect', { sensors: 'DEMO_DMZ' });
+		
 		if (localStorage.getItem('events')) {
 			$('table#event_stats tbody.content').html(localStorage.getItem('events'));
 		};
