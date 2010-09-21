@@ -86,8 +86,6 @@ module Sguil
         Sguil.callbacks.each { |block| block.call(self,line) if block }
 
         case line
-        when %r|^UserID|
-          @user_id ||= return_user_id(line)
         when %r|^NewSnortStats|
           push 'sensor/updates', format_and_publish(:new_snort_stats, line)
         when %r|^SensorList|
@@ -100,6 +98,8 @@ module Sguil
           push 'sensor/updates', format_and_publish(:update_snort_stats, line)
         when %r|^InsertEvent|
           push 'insert/events', format_and_publish(:insert_event, line)
+        when %r|^UserID|
+          @user_id ||= return_user_id(line)
         end
       end
     end

@@ -35,6 +35,7 @@ helpers do
   end
 
   def current_user
+    puts "In Current User: #{user_id}"
     Sguil.get(user_id)
   end
   
@@ -70,10 +71,10 @@ get '/login' do
       :uid => user_id
     }))
     
-    current_user.login({:username => params[:username], :password => 'demo'})
+    current_user.login({:username => (params[:username] || params[:username] = 'demo'), :password => 'demo'})
     
     session[:login] = true
-    session[:username] = 'demo'
+    session[:username] = params[:username]
     session[:ipaddr] = env['REMOTE_ADDR']
     session[:agent] = env['HTTP_USER_AGENT']
     session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
@@ -144,7 +145,7 @@ post '/connect' do
 end
 
 get '/connect' do
-  current_user.sensor_list if has_session?
+  return "#{current_user.sensor_list}" if has_session?
   ""
 end
 
