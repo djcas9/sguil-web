@@ -68,7 +68,7 @@ get '/login' do
     
     Sguil.add_client(user_id, Sguil::Connect.new({
       :client => sguil_web_server,
-      :logger => [:verbose, :debug, :info],
+      :logger => [:verbose, :info],
       :uid => user_id
     }))
     
