@@ -20,11 +20,7 @@
 
 module Sguil  
   module Callbacks
-    
-    class << self
-      include Sguil::Helpers::UI
-    end
-    
+
     def self.included(receiver)
       receiver.extend(ClassMethods)
     end

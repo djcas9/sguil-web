@@ -20,7 +20,6 @@
 
 require 'sguil/helpers/cli'
 require 'sguil/helpers/commands'
-require 'sguil/helpers/ui'
 require 'sguil/helpers/web'
 
 module Sguil

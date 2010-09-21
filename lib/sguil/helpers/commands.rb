@@ -23,7 +23,6 @@ require 'rest-client'
 module Sguil
   module Helpers
     module Commands
-      include Sguil::Helpers::UI
 
       def sguil_connect
         Sguil.before_connect.each { |block| block.call if block }

@@ -18,10 +18,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'sguil/ui/web'
 require 'sguil/ui/cli'
 require 'sguil/ui/logger'
-
+require 'sguil/ui/web'
 
 module Sguil
   module UI

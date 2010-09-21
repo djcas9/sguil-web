@@ -26,7 +26,7 @@ module Sguil
   class Connect
     include Sguil::Callbacks
     include Sguil::Helpers::Commands
-    include Sguil::Helpers::UI
+    include Sguil::Helpers::CLI
     # extend Forwardable
 
     @client_count = 0

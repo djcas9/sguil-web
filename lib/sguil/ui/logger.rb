@@ -21,7 +21,7 @@
 module Sguil
   module UI
     class Logger
-      include Sguil::Helpers::UI
+      include Sguil::Helpers::CLI
 
       LOGGERS = [:DEBUG, :VERBOSE, :INFO, :WARN, :ERROR]
 
