@@ -139,13 +139,13 @@ get '/sensor_list' do
 end
 
 post '/connect' do
-  current_user.monitor('DEMO_DMZ') if has_session?
+  current_user.monitor(params[:sensors]) if has_session?
   "CONNECT"
 end
 
 get '/connect' do
-  current_user.sensor(params[:sensors]) if has_session?
-  "CONNECT"
+  return JSON.generate(current_user.sensor_list) if has_session?
+  ""
 end
 
 post '/send/message' do
