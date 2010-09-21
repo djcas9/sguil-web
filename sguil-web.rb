@@ -144,7 +144,7 @@ post '/connect' do
 end
 
 get '/connect' do
-  return JSON.generate(current_user.sensor_list) if has_session?
+  current_user.sensor_list if has_session?
   ""
 end
 
