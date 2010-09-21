@@ -18,28 +18,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-module Sguil
-  
-  def Sguil.callbacks
-    @callbacks ||= []
-  end
-  
-  def Sguil.before_receive_data
-    @before_data_callbacks ||= []
-  end
-  
-  def Sguil.before_connect
-    @connect_callbacks ||= []
-  end
-  
-  def Sguil.before_disconnect
-    @disconnect_callbacks ||= []
-  end
-  
+module Sguil  
   module Callbacks
     
     class << self
       include Sguil::Helpers::UI
+    end
+    
+    def self.included(receiver)
+      receiver.extend(ClassMethods)
     end
     
     def add_command(&block)
@@ -58,6 +45,25 @@ module Sguil
       Sguil.on_disconnect << block if block
     end
     
+    module ClassMethods
+      
+      def callbacks
+        @callbacks ||= []
+      end
+      
+      def before_receive_data
+        @before_data_callbacks ||= []
+      end
+      
+      def before_connect
+        @connect_callbacks ||= []
+      end
+      
+      def before_disconnect
+        @disconnect_callbacks ||= []
+      end
+      
+    end
+    
   end
-  
 end

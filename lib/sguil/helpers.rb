@@ -18,8 +18,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'sguil/helpers/ui'
+require 'sguil/helpers/cli'
 require 'sguil/helpers/commands'
+require 'sguil/helpers/ui'
+require 'sguil/helpers/web'
 
 module Sguil
   module Helpers

@@ -30,6 +30,8 @@ module Sguil
     
     class Web < Sinatra::Base
       
+      include Sguil::Helpers::Web
+      
       enable :sessions
       use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
 

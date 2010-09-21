@@ -18,14 +18,20 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-class Notes
-  include DataMapper::Resource
+module Sguil
+  module Database
+    
+    class Notes
+      include DataMapper::Resource
 
-  property :id,         Integer, :serial => true    # primary serial key
-  property :body,       Text,    :nullable => false # cannot be null
-  property :created_at, DateTime
-  property :updated_at, DateTime
+      property :id,         Integer, :serial => true    # primary serial key
+      property :body,       Text,    :nullable => false # cannot be null
+      property :created_at, DateTime
+      property :updated_at, DateTime
 
-  # validates_present :body
-  # validates_length :body, :minimum => 1
+      # validates_present :body
+      # validates_length :body, :minimum => 1
+    end
+    
+  end  
 end

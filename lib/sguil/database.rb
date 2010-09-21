@@ -22,4 +22,12 @@ require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/sguil.sqlite3")
+require 'sguil/database/notes'
+
+module Sguil
+  module Database
+    
+    DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/sguil.sqlite3")
+    
+  end
+end

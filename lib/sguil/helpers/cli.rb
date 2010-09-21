@@ -18,10 +18,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'sguil-plugins/sinatra'
-
 module Sguil
-  module Plugins
-    
+  module Helpers
+    module CLI
+      
+    end
   end
 end
