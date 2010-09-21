@@ -17,14 +17,3 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
-
-require 'sguil/ui/web'
-require 'sguil/ui/cli'
-require 'sguil/ui/logger'
-
-
-module Sguil
-  module UI
-    
-  end
-end

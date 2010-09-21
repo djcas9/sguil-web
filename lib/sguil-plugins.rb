@@ -1,1 +1,0 @@
-require 'sguil-plugins/content_for'

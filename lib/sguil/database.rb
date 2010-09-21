@@ -18,13 +18,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'sguil/ui/web'
-require 'sguil/ui/cli'
-require 'sguil/ui/logger'
+require 'dm-core'
+require 'dm-validations'
+require 'dm-timestamps'
 
-
-module Sguil
-  module UI
-    
-  end
-end
+DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/sguil.sqlite3")

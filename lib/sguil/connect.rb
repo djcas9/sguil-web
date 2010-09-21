@@ -1,3 +1,23 @@
+#
+# Sguil[web] - A web client for the popular Sguil security analysis tool.
+#
+# Copyright (c) 2010 Dustin Willis Webber (dustin.webber at gmail.com)
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+
 require 'faye'
 require 'json'
 require 'sguil/parse'
@@ -21,10 +41,10 @@ module Sguil
       @port = options[:port] || 7734
       @uid = options[:uid]
       
-      Sguil.ui.logger(options[:logger] || [])
+      Sguil.logger.setup(options[:logger] || [])
       
       @socket = TCPSocket.open(@server, @port)
-      Sguil.ui.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
+      Sguil.logger.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
       sguil_connect
     end
 
@@ -44,7 +64,7 @@ module Sguil
       password = options[:password] || 'demo'
       @username = username
       
-      Sguil.ui.info "New Login - #{username}"
+      Sguil.logger.info "New Login - #{username}"
       send("ValidateUser #{username} #{password}")
     end
 
@@ -61,7 +81,7 @@ module Sguil
     end
 
     def monitor(sensors)
-      Sguil.ui.info "Connecting to sensors - #{sensors}"
+      Sguil.logger.info "Connecting to sensors - #{sensors}"
       if sensors
         return send("MonitorSensors {#{sensors.join(' ')}}") if sensors.kind_of?(Array)
         send("MonitorSensors {#{sensors}}")
@@ -69,7 +89,7 @@ module Sguil
     end
 
     def kill!
-      Sguil.ui.info "Killing Connection - #{@uid}"
+      Sguil.logger.info "Killing Connection - #{@uid}"
       @socket.close
       exit -1
     end
@@ -80,7 +100,7 @@ module Sguil
 
       while line = @socket.gets do
 
-        Sguil.ui.verbose(line)
+        Sguil.logger.verbose(line)
         
         #Sguil.callbacks.each { |block| block.call(self,line) if block }
 

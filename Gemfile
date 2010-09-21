@@ -1,4 +1,11 @@
 # A sample Gemfile
-source "http://rubygems.org"
+source 'http://gems.github.com'
 
-# gem "rails"
+gem 'json'
+gem 'sinatra'
+gem 'eventmachine'
+gem 'rest-client'
+gem 'faye'
+
+# gem 'famoseagle-carrot', :require_as => 'carrot'
+# gem 'amqp'
