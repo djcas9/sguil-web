@@ -39,6 +39,24 @@ module Sguil
     def update_snort_stats
       update_sensor_data(strip_brackets(@data))
     end
+    
+    def increment_event
+      data = @data.gsub('IncrEvent').split(' ')
+      
+      ids = data.split('.')
+      
+      incr_event = Hash.new
+      incr_event.merge!(
+        {
+          :event_uid => data[0],
+          :sensor_id => ids.first,
+          :event_id => ids.last,
+          :priority => data[1],
+          :count => data[2]
+      })
+      
+      incr_event
+    end
 
     private
 

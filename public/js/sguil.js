@@ -154,7 +154,10 @@ var Sguil = {
 		if ($('.event_stats tbody.content tr.remove_me').length > 0) {
 			$('.event_stats tbody.content tr.remove_me').remove();
 		};
-		var EventData = '<tr data-sensor="'+data.sensor_id+'" id="event'+data.event_id+'" class='+data.event_id+data.sensor_id+'> \
+		
+		var event_uid = data.sensor_id + '.' + data.event_id;
+		
+		var EventData = '<tr data-sensor="'+data.sensor_id+'" data-event="'+data.event_id+'" id="'+event_uid+'" class="'+event_uid+'"> \
 			<td>'+data.event_id+'</td> \
 			<td class="priority_'+data.priority+'">'+data.priority+'</td> \
 			<td>'+data.sensor+'</td> \
@@ -166,11 +169,20 @@ var Sguil = {
 			<td>'+data.created_at+'</td> \
 			</tr>';
 			
-			if ($('table.event_stats tbody.content tr.'+data.event_id+data.sensor_id).length > 0) {
-				$('table.event_stats tbody.content tr.'+data.event_id+data.sensor_id).replaceWith(EventData);
+			if ($('table.event_stats tbody.content tr.' + event_uid).length > 0) {
+				$('table.event_stats tbody.content tr.' + event_uid).replaceWith(EventData);
 			} else {
 				$('table.event_stats tbody.content').append(EventData);
 			};
+	},
+
+	increment_event: function(data){
+		
+		if ($('table.event_stats tbody.content tr.' + data.event_uid).length > 0) {
+			console.log(data)
+			//$('table.event_stats tbody.content tr.' + data.event_uid)
+		};
+		
 	},
 
 	add_sensor: function(data){
@@ -244,6 +256,10 @@ var events = sguil.subscribe('/add_event/'+sguil_uid, function(data) {
 	// $('table#event_stats tbody.content')
 	Sguil.insert_event(data);
 	$('table.event_stats').trigger("update"); 
+});
+
+var	increment_event = sguil.subscribe('/increment_event/'+sguil_uid, function(data) {
+	Sguil.increment_event(data); 
 });
 
 var sensor = sguil.subscribe('/sensor/'+sguil_uid, function (sensor) {

@@ -115,6 +115,10 @@ post '/sensor/updates' do
   "PUSH ADDED"
 end
 
+post '/increment/event' do
+  env['faye.client'].publish("/increment_event/#{params[:uid]}", params)
+end
+
 post '/user/message' do
   env['faye.client'].publish("/usermsg/#{params[:uid]}", params)
   "USERMSG"

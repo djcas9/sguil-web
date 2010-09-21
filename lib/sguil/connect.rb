@@ -97,6 +97,8 @@ module Sguil
           push 'sensor/updates', format_and_publish(:update_snort_stats, line)
         when %r|^InsertEvent|
           push 'insert/events', format_and_publish(:insert_event, line)
+        when %r|^IncrEvent|
+          push 'increment/event', format_and_publish(:increment_event, line)
         when %r|^UserID|
           @user_id ||= line.gsub('UserID', '').to_i
         end
