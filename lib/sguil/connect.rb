@@ -40,11 +40,7 @@ module Sguil
       @client = options[:client] || Sguil.server
       @port = options[:port] || 7734
       @uid = options[:uid]
-      connect_to_sguil_server
-      sguil_setup
-    end
-
-    def connect_to_sguil_server
+      
       begin
         Sguil.logger.setup(options[:logger] || [])
         @socket = TCPSocket.open(@server, @port)
@@ -54,6 +50,8 @@ module Sguil
         kill
         @connected = false
       end
+      
+      sguil_setup
     end
 
     def connected?
