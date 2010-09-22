@@ -21,13 +21,15 @@
 require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
-
+require 'dm-types'
 require 'sguil/database/notes'
 
 module Sguil
   module Database
     
-    DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/sguil.sqlite3")
+    def self.setup
+      DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/sguil.sqlite3")
+    end
     
   end
 end

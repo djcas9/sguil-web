@@ -18,19 +18,21 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+# $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+
 require 'rubygems'
 require 'dm-core'
 require 'sinatra'
 require 'faye'
-require 'pp'
 
 module Sguil
   module UI
-    
     class Web < Sinatra::Base
       
       include Sguil::Helpers::Web
+      
+      set :run, true
+      set :root, File.expand_path(File.join(File.dirname(__FILE__),'..','..','..','data','sguil'))
       
       enable :sessions
       use Faye::RackAdapter, :mount => '/sguil', :timeout => 20
@@ -47,6 +49,8 @@ module Sguil
         end
 
       end
+
+      helpers Sguil::Helpers::Web
 
       helpers do
 

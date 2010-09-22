@@ -20,7 +20,11 @@
 
 module Sguil
   module Helpers
-    module UI
+    module CLI
+      
+      def self.included(klass)
+        klass.extend self
+      end
       
       #
       # Green

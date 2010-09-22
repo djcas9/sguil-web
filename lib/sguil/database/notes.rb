@@ -24,8 +24,8 @@ module Sguil
     class Notes
       include DataMapper::Resource
 
-      property :id,         Integer, :serial => true    # primary serial key
-      property :body,       Text,    :nullable => false # cannot be null
+      property :id,         Integer, :key => true    # primary serial key
+      property :body,       Text
       property :created_at, DateTime
       property :updated_at, DateTime
 

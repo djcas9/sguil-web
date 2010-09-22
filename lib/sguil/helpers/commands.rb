@@ -23,6 +23,10 @@ require 'rest-client'
 module Sguil
   module Helpers
     module Commands
+      
+      def self.included(klass)
+        klass.extend self
+      end
 
       def sguil_connect
         Sguil.before_connect.each { |block| block.call if block }

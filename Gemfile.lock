@@ -1,12 +1,27 @@
 GEM
-  remote: http://gems.github.com/
+  remote: http://rubygems.org/
   specs:
     addressable (2.2.1)
     daemons (1.1.0)
-    em-http-request (0.2.11)
+    dm-core (1.0.2)
+      addressable (~> 2.2)
+      extlib (~> 0.9.15)
+    dm-timestamps (1.0.2)
+      dm-core (~> 1.0.2)
+    dm-types (1.0.2)
+      dm-core (~> 1.0.2)
+      fastercsv (~> 1.5.3)
+      json_pure (~> 1.4)
+      stringex (~> 1.1.0)
+      uuidtools (~> 2.1.1)
+    dm-validations (1.0.2)
+      dm-core (~> 1.0.2)
+    em-http-request (0.2.12)
       addressable (>= 2.0.0)
       eventmachine (>= 0.12.9)
     eventmachine (0.12.10)
+    extlib (0.9.15)
+    fastercsv (1.5.3)
     faye (0.5.2)
       em-http-request (>= 0.2)
       eventmachine (>= 0.12)
@@ -14,19 +29,30 @@ GEM
       rack (>= 1.0)
       thin (>= 1.2)
     json (1.4.6)
+    json_pure (1.4.6)
+    mime-types (1.16)
     rack (1.2.1)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
     sinatra (1.0)
       rack (>= 1.0)
+    stringex (1.1.0)
     thin (1.2.7)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
+    uuidtools (2.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  eventmachine
+  addressable
+  dm-core (~> 1.0.2)
+  dm-timestamps (~> 1.0.2)
+  dm-types (~> 1.0.2)
+  dm-validations (~> 1.0.2)
   faye
   json
+  rest-client
   sinatra

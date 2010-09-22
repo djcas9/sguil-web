@@ -18,6 +18,6 @@ end
 lib_dir = File.join(root_dir,'lib')
 $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
 
-require 'sguil/ui/web'
-
-run Sguil::UI::Web
+# require 'sguil/ui/web'
+# 
+# run Sguil::UI::Web

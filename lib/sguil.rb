@@ -18,9 +18,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'eventmachine'
-require 'pp'
-
 require 'sguil/helpers'
 require 'sguil/ui'
 require 'sguil/callbacks'
@@ -32,7 +29,7 @@ require 'sguil/version'
 module Sguil
   
   class << self
-    include Sguil::Helpers::UI
+    include Sguil::Helpers::CLI
     attr_accessor :clients
 
     def clients
@@ -86,6 +83,11 @@ module Sguil
 
     def logger
       @logger ||= Sguil::UI::Logger.new
+    end
+
+    def cli
+      @cli = Sguil::UI::CLI.new
+      @cli.options(*ARGV)
     end
 
     def connect(options={})

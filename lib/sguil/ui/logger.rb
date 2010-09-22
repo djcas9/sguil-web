@@ -29,10 +29,10 @@ module Sguil
         loggers.each do |log|
           const_name = "#{log}".upcase
 
-          if Sguil::UI::LOGGERS.include?(const_name.to_sym)
+          if LOGGERS.include?(const_name.to_sym)
             Sguil::UI.const_set(const_name.to_sym, true)
           else
-            Sguil.ui.error("Unknown Logger #{const_name}\nAvailable Logger Options: #{Sguil::UI::LOGGERS.inspect}")
+            Sguil.ui.error("Unknown Logger #{const_name}\nAvailable Logger Options: #{LOGGERS.inspect}")
           end
 
         end
@@ -62,33 +62,35 @@ module Sguil
         STDOUT.puts red("#{msg}")
       end
 
-      def configured(const)
-        if Sguil::UI.const_defined?(const)
-          return Sguil::UI.const_get(const)
-        else
-          return false
-        end
-      end
+      private
 
-      def show_message(type,message,std)
-        case type
-        when :INFO
-          type = green(type)
-        when :WARN
-          type = yellow(type)
-        when :ERROR
-          type = red(type)
-        when :DEBUG
-          type = green(type)
-        when :VERBOSE
-          type = blue(type)
+        def configured(const)
+          if Sguil::UI.const_defined?(const)
+            return Sguil::UI.const_get(const)
+          else
+            return false
+          end
         end
 
-        message.split("\n").each do |msg|
-          std.puts("#{type}: #{msg}") if std.respond_to?(:puts)
-        end
+        def show_message(type,message,std)
+          case type
+          when :INFO
+            type = green(type)
+          when :WARN
+            type = yellow(type)
+          when :ERROR
+            type = red(type)
+          when :DEBUG
+            type = green(type)
+          when :VERBOSE
+            type = blue(type)
+          end
 
-      end
+          message.split("\n").each do |msg|
+            std.puts("#{type}: #{msg}") if std.respond_to?(:puts)
+          end
+
+        end
 
     end
   end
