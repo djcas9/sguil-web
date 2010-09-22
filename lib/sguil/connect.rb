@@ -51,6 +51,7 @@ module Sguil
         Sguil.logger.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
         @connected = true
       rescue
+        kill
         @connected = false
       end
     end
