@@ -64,7 +64,7 @@ module Sguil
       password = options[:password] || 'demo'
       @username = username
 
-      Sguil.logger.info "New Login - #{username}"
+      Sguil.logger.info "Login: #{username} (#{@uid})"
       send("ValidateUser #{username} #{password}") if connected?
     end
 
