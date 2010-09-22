@@ -35,7 +35,7 @@ module Sguil
 
       def sguil_disconnect
         Sguil.before_disconnect.each { |block| block.call if block }
-        Sguil.logger.warn "Logout: #{@username} (#{@uid})"
+        Sguil.logger.warning "Logout: #{@username} (#{@uid})"
       end
 
       def format_and_publish(method,data)
