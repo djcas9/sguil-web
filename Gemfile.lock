@@ -55,4 +55,4 @@ DEPENDENCIES
   faye
   json
   rest-client
-  sinatra
+  sinatra (~> 1.0)

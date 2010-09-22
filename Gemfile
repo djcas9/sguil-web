@@ -1,7 +1,7 @@
 # A sample Gemfile
 source 'http://rubygems.org/'
 
-gem 'sinatra'
+gem 'sinatra', '~> 1.0'
 gem 'faye'
 gem 'json'
 gem 'dm-core', '~> 1.0.2'

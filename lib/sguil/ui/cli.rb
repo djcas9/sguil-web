@@ -37,8 +37,9 @@ module Sguil
       def options(*args)
 
         @options = {
-          :host => '0.0.0.0',
-          :port => 3000
+          :bind => '0.0.0.0',
+          :port => 3000,
+          :environment => :development
         }
 
         @opts = OptionParser.new do |opts|
@@ -48,12 +49,12 @@ module Sguil
             @options[:start] = true
           end
 
-          opts.on('-e ','--env ', [:development, :production], 'Set The Environment. Default: development') do |env|
-            @options[:env] = env
+          opts.on('-e ','--env ', [:development, :production], 'Set The Environment. Default: development') do |environment|
+            @options[:environment] = environment
           end
           
-          opts.on('-h ','--host ', String, 'Set The Server Host. Default: 0.0.0.0') do |host|
-            @options[:host] = host
+          opts.on('-h ','--host ', String, 'Set The Server Host. Default: 0.0.0.0') do |bind|
+            @options[:bind] = bind
           end
 
           opts.on('-p ','--port ', Integer, 'Set The Server Port. Default: 8080') do |port|
@@ -82,9 +83,11 @@ module Sguil
         end
 
         begin
+          
           @args = @opts.parse!(args)
           start_server if @options[:start]
           print_usage unless @options[:start] || @options[:db]
+          
         rescue Interrupt
           Sguil.logger.explicit "\nExiting..."
         rescue OptionParser::MissingArgument => e
