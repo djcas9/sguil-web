@@ -30,7 +30,7 @@ module Sguil
           const_name = "#{log}".upcase
 
           if LOGGERS.include?(const_name.to_sym)
-            Sguil::UI.const_set(const_name.to_sym, true)
+            Sguil::UI.const_set(const_name.to_sym, true) unless Sguil::UI.const_defined?(const_name.to_sym)
           else
             Sguil.ui.error("Unknown Logger #{const_name}\nAvailable Logger Options: #{LOGGERS.inspect}")
           end

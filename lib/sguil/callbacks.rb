@@ -22,7 +22,7 @@ module Sguil
   module Callbacks
 
     def self.included(receiver)
-      receiver.extend(ClassMethods)
+      receiver.extend(CallbackMethods)
     end
     
     def add_command(&block)
@@ -41,7 +41,7 @@ module Sguil
       Sguil.on_disconnect << block if block
     end
     
-    module ClassMethods
+    module CallbackMethods
       
       def callbacks
         @callbacks ||= []

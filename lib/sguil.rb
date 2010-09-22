@@ -21,16 +21,16 @@
 require 'sguil/helpers'
 require 'sguil/ui'
 require 'sguil/callbacks'
-require 'sguil/plugins'
 require 'sguil/database'
 require 'sguil/connect'
 require 'sguil/version'
 
 module Sguil
-  
+  include Sguil::Callbacks
+
   class << self
     include Sguil::Helpers::CLI
-    attr_accessor :clients
+    attr_accessor :clients, :server
 
     def clients
       @clients ||= {}
@@ -38,7 +38,7 @@ module Sguil
 
     def add_client(name,socket)
       Sguil.clients.merge!({name.to_sym => {
-        :socket => socket
+                              :socket => socket
       }})
     end
 
@@ -69,8 +69,12 @@ module Sguil
       "client_#{Time.now.to_i}#{Time.now.usec}"
     end
 
-    def kill(client_id)
-      Sguil.clients[client_id.to_sym][:fork].kill! if Sguil.clients.has_key?(client_id.to_sym)
+    def logout(user)
+      if user
+        id = user.uid.to_sym
+        Sguil.clients.delete(id) if Sguil.clients.has_key?(id)
+        user.kill
+      end
     end
 
     def sensors

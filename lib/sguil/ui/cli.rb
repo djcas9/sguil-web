@@ -30,40 +30,61 @@ module Sguil
         Sguil.logger.setup([:debug,:verbose,:warn,:info])
       end
 
+      def add_new_user
+        
+      end
+      
       def options(*args)
 
-        @options = OpenStruct.new
+        @options = {
+          :host => '0.0.0.0',
+          :port => 3000
+        }
 
         @opts = OptionParser.new do |opts|
-          opts.banner = "SguilWeb - Version: #{Sguil::VERSION}.\nUsage: sguil-web -p 3000 -e production\n\n"
+          opts.banner = "SguilWeb - Version: #{Sguil::VERSION}.\nUsage: sguil-web -s -h 0.0.0.0 -p 3000 -e production\n\n"
 
-          opts.on('-a ','--add-user USERNAME', String, 'Add a new SguilWeb user.') do |username|
-            @options.username = username
+          opts.on('-s','--start', 'Start the SguilWeb server.') do |run|
+            @options[:start] = true
           end
 
-          opts.on('-e ','--env ', [:development, :production], 'Set the SguilWeb Environment. Default: development') do |env|
-            @options.env = env
+          opts.on('-e ','--env ', [:development, :production], 'Set The Environment. Default: development') do |env|
+            @options[:env] = env
+          end
+          
+          opts.on('-h ','--host ', Integer, 'Set The Server Host. Default: 0.0.0.0') do |host|
+            @options[:host] = host
           end
 
-          opts.on('-p ','--port ', Integer, 'Set the SguilWeb Port. Default: 8080') do |port|
-            @options.port = port
+          opts.on('-p ','--port ', Integer, 'Set The Server Port. Default: 8080') do |port|
+            @options[:port] = port
+          end
+          
+          opts.on('-a ','--add-user NAME', String, 'Add A New User.') do |username|
+            @options[:db] = true
+            add_new_user
+          end
+          
+          opts.on('-r ','--remove-user NAME', String, 'Remove A User.') do |username|
+            @options[:db] = true
+            add_new_user
           end
 
-          opts.on('-h', '--help', 'This help summary page.') do |help|
+          opts.on('-H', '--help', 'SguilWeb Usage & Information.') do |help|
             print_usage
           end
 
-          opts.on('-v', '--version', 'Version number') do |version|
+          opts.on('-v', '--version', 'Version Information') do |version|
             STDOUT.puts "SguilWeb - Version: #{Sguil::VERSION}"
             exit -1
           end
-          
+
         end
 
         begin
-          arguments = @opts.parse!(args)
-          puts arguments
-          print_usage if @options.empty?
+          @args = @opts.parse!(args)
+          start_server if @options[:start]
+          print_usage unless @options[:start] || @options[:db]
         rescue Interrupt
           Sguil.logger.explicit "\nExiting..."
         rescue OptionParser::MissingArgument => e
@@ -84,8 +105,9 @@ module Sguil
         exit -1
       end
 
-      def server
-        Sguil::UI::Web.run!(options={})
+      def start_server
+        Sguil.server = "#{@options[:host]}:#{@options[:port]}"
+        Sguil::UI::Web.run!(@options)
       end
 
     end

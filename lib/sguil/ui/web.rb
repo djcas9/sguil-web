@@ -18,10 +18,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-# $LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
-
-require 'rubygems'
-require 'dm-core'
 require 'sinatra'
 require 'faye'
 
@@ -29,7 +25,7 @@ module Sguil
   module UI
     class Web < Sinatra::Base
       
-      include Sguil::Helpers::Web
+      helpers Sguil::Helpers::Web
       
       set :run, true
       set :root, File.expand_path(File.join(File.dirname(__FILE__),'..','..','..','data','sguil'))
@@ -39,37 +35,9 @@ module Sguil
 
       configure do
 
-        # Depending On The Web Server You
-        # May Need To Set The Below Manually
-        @@sguil_web_server = '0.0.0.0:3000'
-
         trap('SIGINT') do
           Sguil.kill_all!
           session = {}
-        end
-
-      end
-
-      helpers Sguil::Helpers::Web
-
-      helpers do
-
-        def user_id
-          session[:client_id]
-        end
-
-        def has_session?
-          return true if Sguil.has(user_id)
-          false
-        end
-
-        def current_user
-          puts "In Current User: #{user_id}"
-          Sguil.get(user_id)
-        end
-
-        def sguil_web_server
-          @@sguil_web_server
         end
 
       end
@@ -102,29 +70,32 @@ module Sguil
 
           current_user.login({:username => (params[:username] || params[:username] = 'demo'), :password => 'demo'})
 
-          session[:login] = true
-          session[:username] = params[:username]
-          session[:ipaddr] = env['REMOTE_ADDR']
-          session[:agent] = env['HTTP_USER_AGENT']
-          session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
+          if current_user.connected?
+            
+            session[:login] = true
+            session[:username] = params[:username]
+            session[:ipaddr] = env['REMOTE_ADDR']
+            session[:agent] = env['HTTP_USER_AGENT']
+            session[:lang] = env['HTTP_ACCEPT_LANGUAGE']
+            
+            Sguil.add_fork(user_id, Thread.new { current_user.receive_data })
+            redirect '/' if has_session?
+          
+          else
+            
+            redirect '/welcome'
+            
+          end
 
-
-          Sguil.add_fork(user_id, Thread.new { current_user.receive_data })
-
-          redirect '/' if has_session?
         else
           redirect '/welcome'
         end
       end
 
       get '/logout' do
-        begin
-          Sguil.kill(user_id)
-          session = {}
-        rescue IOError
-        ensure
-          redirect '/welcome'
-        end
+        Sguil.logout(current_user) if current_user
+        session = {}
+        redirect '/welcome'
       end
 
       get '/sensor_updates' do

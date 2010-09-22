@@ -28,15 +28,14 @@ module Sguil
         klass.extend self
       end
 
-      def sguil_connect
+      def sguil_setup
         Sguil.before_connect.each { |block| block.call if block }
-        Sguil.logger.info "Client Connected."
+        Sguil.logger.info "Client: Connected. (#{@uid})"
       end
 
       def sguil_disconnect
         Sguil.before_disconnect.each { |block| block.call if block }
-        Sguil.logger.warning "Client Disconnected."
-        @socket.close
+        Sguil.logger.warning "Client: Disconnected. (#{@uid})"
       end
 
       def format_and_publish(method,data)
@@ -51,9 +50,9 @@ module Sguil
       def push(path, data)
         begin
           
-          # Sguil.client.publish(path, data)
           data.merge!({:uid => @uid}) if data.is_a?(Hash)
           RestClient.post("http://#{@client}/#{path}", data)
+          
           Sguil.logger.debug("PATH: http://#{@client}/#{path}\nPARAMS: #{data.inspect}")
           
         rescue => error_message
