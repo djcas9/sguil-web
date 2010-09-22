@@ -39,7 +39,7 @@ module Sguil
       @server = options[:server] || 'demo.sguil.net'
       @client = options[:client] || Sguil.server
       @port = options[:port] || 7734
-      @uid = options[:uid]      
+      @uid = options[:uid]
       connect_to_sguil_server
       sguil_setup
     end
@@ -54,7 +54,7 @@ module Sguil
         @connected = false
       end
     end
-    
+
     def connected?
       @connected
     end
@@ -89,9 +89,11 @@ module Sguil
     end
 
     def kill
-      connected = false
-      socket.close if connected?
-      sguil_disconnect
+      if connected?
+        connected = false
+        socket.close
+        sguil_disconnect
+      end
     end
 
     def receive_data
