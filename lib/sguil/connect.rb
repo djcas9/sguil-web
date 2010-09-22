@@ -32,8 +32,8 @@ module Sguil
     @client_count = 0
     @user_id = ''
 
-    attr_reader :server, :uid, :port, :client, :socket
-    attr_accessor :client_count, :username, :id, :connected
+    attr_reader :server, :uid, :port, :client
+    attr_accessor :client_count, :username, :socket, :id, :connected
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
