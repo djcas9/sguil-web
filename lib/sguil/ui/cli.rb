@@ -52,7 +52,7 @@ module Sguil
             @options[:env] = env
           end
           
-          opts.on('-h ','--host ', Integer, 'Set The Server Host. Default: 0.0.0.0') do |host|
+          opts.on('-h ','--host ', String, 'Set The Server Host. Default: 0.0.0.0') do |host|
             @options[:host] = host
           end
 
