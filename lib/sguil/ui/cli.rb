@@ -109,7 +109,7 @@ module Sguil
       end
 
       def start_server
-        Sguil.server = "#{@options[:host]}:#{@options[:port]}"
+        Sguil.server = "#{@options[:bind]}:#{@options[:port]}"
         Sguil::UI::Web.run!(@options)
       end
 
