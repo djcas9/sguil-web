@@ -38,7 +38,7 @@ module Sguil
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
-      @client = Server.client
+      @client = Sguil.client
       @port = options[:port] || 7734
       @uid = options[:uid]
       
