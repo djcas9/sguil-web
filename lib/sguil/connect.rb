@@ -45,7 +45,6 @@ module Sguil
       begin
         Sguil.logger.setup(options[:logger] || [])
         @socket = TCPSocket.open(@server, @port)
-        Sguil.logger.info "SguilWeb #{Sguil::VERSION}\nConnecting to Sguil Server: #{@server}:#{@port}"
         @connected = true
       rescue
         kill

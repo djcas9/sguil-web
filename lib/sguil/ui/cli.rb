@@ -110,6 +110,7 @@ module Sguil
 
       def start_server
         Sguil.server = "#{@options[:bind]}:#{@options[:port]}"
+        STDOUT.puts green("SguilWeb - Version: #{Sguil::VERSION}")
         Sguil::UI::Web.run!(@options)
       end
 
