@@ -38,6 +38,8 @@
 
 <% content_for :foot do %>
 	<script type="text/javascript">
+	$(document).ready(function(){
 		$.post('/connect', { sensors: 'DEMO_DMZ' });
+	});
 	</script>
 <% end %>
