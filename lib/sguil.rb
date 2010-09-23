@@ -30,7 +30,18 @@ module Sguil
 
   class << self
     include Sguil::Helpers::CLI
-    attr_accessor :clients, :server
+    attr_accessor :client, :clients, :server
+
+    def client
+      ensure_em_running!
+      @faye ||= Faye::Client.new("http://#{Sguil.server}/sguil")
+    end
+
+    def ensure_em_running!
+      Thread.new { EM.run } unless EM.reactor_running?
+      while not EM.reactor_running?
+      end
+    end
 
     def clients
       @clients ||= {}

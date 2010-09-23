@@ -49,7 +49,7 @@ module Sguil
         begin
           
           data.merge!({:uid => @uid}) if data.is_a?(Hash)
-          @faye.publish(path, data)
+          @client.publish(path, data)
           
           Sguil.logger.debug("PATH: http://#{@client}/#{path}\nPARAMS: #{data.inspect}")
           

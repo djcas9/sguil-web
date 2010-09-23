@@ -33,12 +33,12 @@ module Sguil
     @client_count = 0
     @user_id = ''
 
-    attr_reader :server, :uid, :port, :client, :faye
+    attr_reader :server, :uid, :port, :client
     attr_accessor :client_count, :username, :socket, :id, :connected
 
     def initialize(options={})
       @server = options[:server] || 'demo.sguil.net'
-      @client = options[:client] || Sguil.server
+      @client = Server.client
       @port = options[:port] || 7734
       @uid = options[:uid]
       
@@ -46,24 +46,15 @@ module Sguil
         Sguil.logger.setup(options[:logger] || [])
         @socket = TCPSocket.open(@server, @port)
         @connected = true
+      rescue Errno::EPIPE
+        kill
+        @connected = false
       rescue
         kill
         @connected = false
       end
       
-      setup_faye
       sguil_setup
-    end
-
-    def setup_faye
-      ensure_em_running!
-      @faye ||= Faye::Client.new("http://#{Sguil.server}/sguil")
-    end
-
-    def ensure_em_running!
-      Thread.new { EM.run } unless EM.reactor_running?
-      while not EM.reactor_running?
-      end
     end
 
     def connected?
