@@ -41,7 +41,9 @@
 		</div>
 		
 		<%= erb(:growl, :layout => false) %>
-  
+		
+  		<% yield_content :foot %>
+
 	</body>
 	
 </html>
