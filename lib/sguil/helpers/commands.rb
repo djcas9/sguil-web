@@ -18,8 +18,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'rest-client'
-
 module Sguil
   module Helpers
     module Commands
@@ -49,9 +47,6 @@ module Sguil
 
       def push(path, data)
         begin
-          
-          #data.merge!({:uid => @uid}) if data.is_a?(Hash)
-          #RestClient.post("http://#{@client}/#{path}", data)
           
           data.merge!({:uid => @uid}) if data.is_a?(Hash)
           @faye.publish(path, data)

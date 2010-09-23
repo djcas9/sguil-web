@@ -104,37 +104,6 @@ module Sguil
         erb :sensor_updates
       end
 
-      #
-      # Faye Subscriptions
-      #
-      # All commands sent from the sguild
-      # server to be published to connected
-      # client.
-      #
-      post '/sensor/updates' do
-        env['faye.client'].publish("/sensor/#{params[:uid]}", params)
-        "PUSH ADDED"
-      end
-
-      post '/increment/event' do
-        env['faye.client'].publish("/increment_event/#{params[:uid]}", params)
-      end
-
-      post '/user/message' do
-        env['faye.client'].publish("/usermsg/#{params[:uid]}", params)
-        "USERMSG"
-      end
-
-      post '/system/message' do
-        env['faye.client'].publish("/system_message/#{params[:uid]}", params)
-        "SYSMSG"
-      end
-
-      post '/insert/events' do
-        env['faye.client'].publish("/add_event/#{params[:uid]}", params)
-        "SYSMSG"
-      end
-
       # Send Commands
       #
       # All commands that are sent to

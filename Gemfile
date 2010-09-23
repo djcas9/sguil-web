@@ -9,7 +9,6 @@ gem 'dm-validations', '~> 1.0.2'
 gem 'dm-timestamps', '~> 1.0.2'
 gem 'dm-types', '~> 1.0.2'
 gem 'addressable'
-gem 'rest-client'
 
 # gem 'famoseagle-carrot', :require_as => 'carrot'
 # gem 'amqp'
