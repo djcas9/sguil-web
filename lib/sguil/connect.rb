@@ -124,7 +124,7 @@ module Sguil
           when %r|^InsertEvent|
             push "/add_event/#{@uid}", format_and_publish(:insert_event, line)
           when %r|^IncrEvent|
-            push "/increment_event/#{@uid}", format_and_publish(:increment_event, line)
+            #push "/increment_event/#{@uid}", format_and_publish(:increment_event, line)
           when %r|^UserID|
             @id ||= line.gsub('UserID', '').to_i
           end
