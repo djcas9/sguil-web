@@ -27,7 +27,7 @@ module Sguil
 
       def initialize(options={})
         @options = options
-        Sguil.logger.setup([:debug,:verbose,:warn,:info])
+        Sguil.logger.setup([:warn,:info])
       end
 
       def add_new_user

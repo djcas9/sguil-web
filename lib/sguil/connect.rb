@@ -18,6 +18,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require "eventmachine"
 require 'faye'
 require 'json'
 require 'sguil/parse'
@@ -32,7 +33,7 @@ module Sguil
     @client_count = 0
     @user_id = ''
 
-    attr_reader :server, :uid, :port, :client
+    attr_reader :server, :uid, :port, :client, :faye
     attr_accessor :client_count, :username, :socket, :id, :connected
 
     def initialize(options={})
@@ -51,7 +52,19 @@ module Sguil
         @connected = false
       end
       
+      setup_faye
       sguil_setup
+    end
+
+    def setup_faye
+      ensure_em_running!
+      @faye ||= Faye::Client.new("http://#{Sguil.server}/sguil")
+    end
+
+    def ensure_em_running!
+      Thread.new { EM.run } unless EM.reactor_running?
+      while not EM.reactor_running?
+      end
     end
 
     def connected?
@@ -62,7 +75,7 @@ module Sguil
       username = options[:username] || 'demo'
       password = options[:password] || 'demo'
       @username = username
-
+      
       Sguil.logger.info "Login: #{username} (#{@uid})"
       send("ValidateUser #{username} #{password}") if connected?
     end
@@ -80,11 +93,13 @@ module Sguil
     end
 
     def monitor(sensors)
+      
       Sguil.logger.info "Connecting to sensors - #{sensors}"
       if sensors
         return send("MonitorSensors {#{sensors.join(' ')}}") if sensors.kind_of?(Array)
         send("MonitorSensors {#{sensors}}")
       end
+      
     end
 
     def kill
@@ -107,19 +122,19 @@ module Sguil
 
           case line
           when %r|^NewSnortStats|
-            push 'sensor/updates', format_and_publish(:new_snort_stats, line)
+            push "/sensor/#{@uid}", format_and_publish(:new_snort_stats, line)
           when %r|^SensorList|
             format_and_publish(:sensors, line)
           when %r|^UserMessage|
-            push 'user/message', format_and_publish(:user_message, line)
+            push "/usermsg/#{@uid}", format_and_publish(:user_message, line)
           when %r|^InsertSystemInfoMsg|
-            push 'system/message', format_and_publish(:insert_system_information, line)
+            push "/system_message/#{@uid}", format_and_publish(:insert_system_information, line)
           when %r|^UpdateSnortStats|
-            push 'sensor/updates', format_and_publish(:update_snort_stats, line)
+            push "/sensor/#{@uid}", format_and_publish(:update_snort_stats, line)
           when %r|^InsertEvent|
-            push 'insert/events', format_and_publish(:insert_event, line)
+            push "/add_event/#{@uid}", format_and_publish(:insert_event, line)
           when %r|^IncrEvent|
-            push 'increment/event', format_and_publish(:increment_event, line)
+            push "/increment_event/#{@uid}", format_and_publish(:increment_event, line)
           when %r|^UserID|
             @id ||= line.gsub('UserID', '').to_i
           end

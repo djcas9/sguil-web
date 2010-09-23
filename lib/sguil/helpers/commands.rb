@@ -50,8 +50,11 @@ module Sguil
       def push(path, data)
         begin
           
+          #data.merge!({:uid => @uid}) if data.is_a?(Hash)
+          #RestClient.post("http://#{@client}/#{path}", data)
+          
           data.merge!({:uid => @uid}) if data.is_a?(Hash)
-          RestClient.post("http://#{@client}/#{path}", data)
+          @faye.publish(path, data)
           
           Sguil.logger.debug("PATH: http://#{@client}/#{path}\nPARAMS: #{data.inspect}")
           
