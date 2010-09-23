@@ -31,7 +31,7 @@ module Sguil
       set :root, File.expand_path(File.join(File.dirname(__FILE__),'..','..','..','data','sguil'))
       
       enable :sessions
-      use Faye::RackAdapter, :mount => '/sguil'
+      # use Faye::RackAdapter, :mount => '/sguil'
 
       configure do
 
@@ -65,6 +65,7 @@ module Sguil
           Sguil.add_client(user_id, Sguil::Connect.new({
             :client => sguil_web_server,
             :faye => env['faye.client'],
+            :logger => [:verbose, :info],
             :uid => user_id
           }))
 

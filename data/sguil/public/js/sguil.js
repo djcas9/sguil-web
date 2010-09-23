@@ -256,7 +256,7 @@ Logger = {
 	}
 };
 
-//Add Logger
+//gAdd Logger
 sguil.addExtension(Logger);
 
 var sensor_array = new Array();
