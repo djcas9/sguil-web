@@ -31,7 +31,7 @@ module Sguil
       set :root, File.expand_path(File.join(File.dirname(__FILE__),'..','..','..','data','sguil'))
       
       enable :sessions
-      # use Faye::RackAdapter, :mount => '/sguil'
+      use Faye::RackAdapter, :mount => '/sguil'
 
       configure do
 
