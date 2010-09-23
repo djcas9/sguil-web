@@ -257,7 +257,10 @@ Logger = {
 };
 
 //gAdd Logger
+Faye.Logging.logLevel = 'debug';
+Faye.logger = function(msg) { sys.puts(msg) };
 sguil.addExtension(Logger);
+
 
 var sensor_array = new Array();
 
