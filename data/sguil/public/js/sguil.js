@@ -258,7 +258,7 @@ Logger = {
 
 //gAdd Logger
 Faye.Logging.logLevel = 'debug';
-Faye.logger = function(msg) { sys.puts(msg) };
+Faye.logger = function(msg) { console.log(msg) };
 sguil.addExtension(Logger);
 
 
