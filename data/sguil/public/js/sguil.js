@@ -245,21 +245,21 @@ $(document).ready(function() {
 
 var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
 
-Logger = {
-	incoming: function(message, callback) {
-		console.log('incoming', message);
-		callback(message)
-	},
-	outgoing: function(message, callback) {
-		console.log('outgoing', message);
-		callback(message);
-	}
-};
+// Logger = {
+// 	incoming: function(message, callback) {
+// 		console.log('incoming', message);
+// 		callback(message)
+// 	},
+// 	outgoing: function(message, callback) {
+// 		console.log('outgoing', message);
+// 		callback(message);
+// 	}
+// };
 
 //gAdd Logger
 Faye.Logging.logLevel = 'debug';
 Faye.logger = function(msg) { console.log(msg) };
-sguil.addExtension(Logger);
+//sguil.addExtension(Logger);
 
 
 var sensor_array = new Array();
