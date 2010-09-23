@@ -65,7 +65,7 @@ module Sguil
           Sguil.add_client(user_id, Sguil::Connect.new({
             :client => sguil_web_server,
             :faye => env['faye.client'],
-            :logger => [:verbose, :info],
+            #:logger => [:verbose, :info],
             :uid => user_id
           }))
 

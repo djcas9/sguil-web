@@ -34,7 +34,7 @@ module Sguil
 
     def client
       ensure_em_running!
-      @faye ||= Faye::Client.new("http://#{Sguil.server}/sguil", {:timeout => 45})
+      @client ||= Faye::Client.new("http://#{Sguil.server}/sguil", {:timeout => 45})
     end
 
     def ensure_em_running!
