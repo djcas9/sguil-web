@@ -243,7 +243,7 @@ $(document).ready(function() {
 	
 });
 
-var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 120})
+var sguil = new Faye.Client('http://'+sguil_server+'/sguil', {timeout: 20})
 
 // Logger = {
 // 	incoming: function(message, callback) {
